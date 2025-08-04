@@ -1,0 +1,21 @@
+Mods: {
+	ShatteredFate: {
+		Items: {
+			BladeOfHundredTruths: {
+				DisplayName: Blade of Hundred Truths
+				Tooltip:
+					'''
+					Ancient relic...
+					...okay, forget it, i dunno what joke to put here.
+					'''
+			}
+		}
+	}
+}
+
+Items: {
+	BladeOfHundredTruths: {
+		DisplayName: Blade Of Hundred Truths
+		Tooltip: ""
+	}
+}

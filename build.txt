@@ -1,0 +1,3 @@
+displayName = Shattered Fate (placeholder)
+author = MZFZ and the SF Dev Team
+version = 0.1
