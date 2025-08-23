@@ -226,7 +226,9 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 				}
 			}
 
-			if (stop && Timer >= HideTime)
+			if ((stop && Timer >= HideTime)
+			|| (CurrentStage == AttackStage.Execute && charge < 0.1f)
+			)
 			{
 				Projectile.Kill();
 			}
@@ -237,7 +239,7 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 			}
 
 			// Reflect projs
-			if (CurrentStage == AttackStage.Execute && ready && !Owner.HasBuff(ModContent.BuffType<AbilityCooldown>()))
+			if (CurrentStage == AttackStage.Execute && ready && !Owner.HasBuff(ModContent.BuffType<Cooldown_OldFrypan>()))
 			{
 				foreach (var targetProj in Main.ActiveProjectiles)
 				{
@@ -255,7 +257,7 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 							targetProj.rotation = -targetProj.rotation;
 
 							SoundEngine.PlaySound(SoundID.Item150, Projectile.position);
-							Owner.AddBuff(ModContent.BuffType<AbilityCooldown>(), 300);
+							Owner.AddBuff(ModContent.BuffType<Cooldown_OldFrypan>(), 300);
 						}
 					}
 				}
@@ -329,7 +331,7 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 
 		public override bool? CanDamage()
 		{
-			if (CurrentStage == AttackStage.Prepare || CurrentStage == AttackStage.Ready || stop || charge < 0.2f)
+			if (CurrentStage == AttackStage.Prepare || CurrentStage == AttackStage.Ready || stop || charge < 0.1f)
 				return false;
 			return base.CanDamage();
 		}
@@ -387,7 +389,7 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 		}
 
 		public override bool? CanHitNPC(NPC target)
-			=> target.whoAmI != Projectile.localAI[0];
+			=> target.whoAmI != Projectile.localAI[0] && !target.townNPC;
 
 		public override void AI()
 		{
