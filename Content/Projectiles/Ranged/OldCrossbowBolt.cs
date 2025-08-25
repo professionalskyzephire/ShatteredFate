@@ -44,6 +44,7 @@ namespace ShatteredFate.Content.Projectiles.Ranged
 				Projectile.ai[1] = target.whoAmI + 1;
 				NetMessage.SendData(27, -1, -1, null, Projectile.whoAmI);
 			}
+			if(Projectile.ai[1] == 2f) target.AddBuff(BuffID.Midas, 600);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("Terraria/Images/Extra_98");
@@ -55,4 +56,5 @@ namespace ShatteredFate.Content.Projectiles.Ranged
 		public override bool? CanDamage() => Projectile.ai[1] <= 0f ? null : false; 
 		public override bool ShouldUpdatePosition() => !Collision.SolidCollision(Projectile.position - Projectile.velocity, Projectile.width, Projectile.height) && Projectile.ai[1] <= 0f;
 	}
+
 }
