@@ -6,6 +6,10 @@ Buffs: {
 }
 
 Items: {
+	CosmicDust: {
+		DisplayName: Cosmic Dust
+		Tooltip: ""
+	}
 	OldFrypan: {
 		DisplayName: Old Frypan
 		Tooltip: It can no longer be used for cooking, but at least it's still good for smashing the heads of your enemies.
@@ -13,6 +17,8 @@ Items: {
 }
 
 Projectiles: {
-	OldFrypan_Hold.DisplayName: Old Frypan_ Hold
-	OldFrypanStomp.DisplayName: Old Frypan Stomp
+	FallingCosmicDust.DisplayName: Falling Cosmic Dust
+	OldFrypan_Hold.DisplayName: Old Frypan
+	OldFrypanStomp.DisplayName: Old Frypan
 }
+
