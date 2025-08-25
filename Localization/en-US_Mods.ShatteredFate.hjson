@@ -10,6 +10,17 @@ Items: {
 		DisplayName: Cosmic Dust
 		Tooltip: ""
 	}
+
+	OldCrossbow: {
+		DisplayName: Old Crossbow
+		Tooltip: 
+			'''
+			<left> to fire a singular bolt that attaches to enemies or the ground
+			Hold <right> to load five, powerful golden bolts
+			Golden bolts pierce five times and increases money drops from enemies
+			'''
+	}
+
 	OldFrypan: {
 		DisplayName: Old Frypan
 		Tooltip: It can no longer be used for cooking, but at least it's still good for smashing the heads of your enemies.
@@ -20,5 +31,8 @@ Projectiles: {
 	FallingCosmicDust.DisplayName: Falling Cosmic Dust
 	OldFrypan_Hold.DisplayName: Old Frypan
 	OldFrypanStomp.DisplayName: Old Frypan
+	OldCrossbow.DisplayName: Old Crossbow
+	OldCrossbowBolt.DisplayName: Old Crossbow Bolt
 }
+
 
