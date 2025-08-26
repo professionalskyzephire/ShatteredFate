@@ -25,6 +25,15 @@ Items: {
 		DisplayName: Old Frypan
 		Tooltip: It can no longer be used for cooking, but at least it's still good for smashing the heads of your enemies.
 	}
+
+	Starstaff: {
+		DisplayName: Starstaff
+		Tooltip: 
+			'''
+			<left> to create a shower of 2-3 stars on your cursor location
+			<right> to summon 3 controllable stars that follow your cursor
+			'''
+	}
 }
 
 Projectiles: {
@@ -33,6 +42,8 @@ Projectiles: {
 	OldFrypanStomp.DisplayName: Old Frypan
 	OldCrossbow.DisplayName: Old Crossbow
 	OldCrossbowBolt.DisplayName: Old Crossbow Bolt
+	Starstaff.DisplayName: Starstaff Star
 }
+
 
 
