@@ -18,8 +18,8 @@ namespace ShatteredFate.Content.Items.Weapons.Magic
 			Item.height = 16;
 			Item.holdStyle = ItemHoldStyleID.HoldGuitar;
 			Item.useStyle = ItemUseStyleID.RaiseLamp;
-			Item.useTime = 12;
-			Item.useAnimation = 12;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
 			Item.damage = 10;
 			Item.autoReuse = true;
 			Item.DamageType = DamageClass.Magic;
@@ -34,14 +34,9 @@ namespace ShatteredFate.Content.Items.Weapons.Magic
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			position.Y -= 480;
-			if(Main.myPlayer == player.whoAmI) for(int i = 0; i < 3; i++) {
-				position.Y -= i * 64;
-				position.X += Main.rand.Next(-128, 129);
+			if(Main.myPlayer == player.whoAmI) for(int i = -1; i <= 1; i++) {
 				velocity = Vector2.Normalize(Main.MouseWorld - position) * velocity.Length();
-				int x = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, player.altFunctionUse, player.altFunctionUse == 2 ? -1f : Main.MouseWorld.Y);
-				NetMessage.SendData(27, -1, -1, null, x);
-				if(i > 0) continue;
-				x = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, -2f, -1f);
+				int x = Projectile.NewProjectile(source, position + velocity.RotatedBy(MathHelper.PiOver2 * i) * MathHelper.Pi, velocity, type, damage, knockback, player.whoAmI, i == 0 ? -2f : player.altFunctionUse, player.altFunctionUse == 2 || i == 0 ? -1f : Main.MouseWorld.Y, i);
 				NetMessage.SendData(27, -1, -1, null, x);
 			}
 			return false;
