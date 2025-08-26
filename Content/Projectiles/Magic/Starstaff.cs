@@ -20,7 +20,6 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			Projectile.timeLeft = 600;
 			Projectile.aiStyle = -1;
 			Projectile.tileCollide = false;
-			Projectile.extraUpdates = 1;
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
@@ -48,8 +47,10 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			else if(Projectile.ai[0] == 2f && Main.myPlayer == Projectile.owner) {
 				Projectile.velocity += Vector2.Normalize(Main.MouseWorld - Projectile.Center) * 0.35f;
 				if(Projectile.Distance(Main.MouseWorld) > 16f) Projectile.velocity *= 0.95f;
+				if(Projectile.ai[2] != 0f) Projectile.position += Projectile.velocity.RotatedBy(MathHelper.PiOver2) * (float)System.Math.Sin(MathHelper.Pi * Projectile.timeLeft * 0.1f) * Projectile.ai[2];
 				NetMessage.SendData(27, -1, -1, null, Projectile.whoAmI);
 			}
+			else if(Projectile.ai[2] != 0f) Projectile.position += Projectile.velocity.RotatedBy(MathHelper.PiOver2) * (float)System.Math.Sin(MathHelper.Pi * Projectile.timeLeft * 0.1f) * Projectile.ai[2];
 			Lighting.AddLight(Projectile.Center, Color.Purple.ToVector3());
 			if(Projectile.ai[1] != -1f && Projectile.Bottom.Y > Projectile.ai[1] && !Projectile.tileCollide) Projectile.tileCollide = !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height);
 			Projectile.rotation += Projectile.direction * 0.2f;
