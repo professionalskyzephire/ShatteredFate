@@ -48,7 +48,7 @@ namespace ShatteredFate.Content.Projectiles.Ranged
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("Terraria/Images/Extra_98");
-			if(Projectile.ai[1] <= 0f) for(int i = 1; i < Projectile.oldPos.Length; i++) if(Projectile.oldPos[i] != Projectile.oldPos[i - 1]) Main.EntitySpriteDraw(texture, Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition, null, Color.Gold with {A = 0} * MathHelper.Lerp(0.25f * Projectile.ai[0], 0f, (float)i / (float)Projectile.oldPos.Length), Projectile.rotation - MathHelper.PiOver2, texture.Size() / 2, Projectile.scale * new Vector2(MathHelper.Lerp(0.8f, 0.2f, (float)i / (float)Projectile.oldPos.Length), 1f), SpriteEffects.None, 0);
+			if(Projectile.ai[1] <= 0f) for(int i = 1; i < Projectile.oldPos.Length; i++) if(Projectile.oldPos[i] != Projectile.oldPos[i - 1]) Main.EntitySpriteDraw(texture, Projectile.oldPos[i] + Projectile.Size / 2 - Main.screenPosition, null, Color.Gold with {A = 0} * MathHelper.Lerp(0.25f * Projectile.ai[0], 0f, (float)i / (float)Projectile.oldPos.Length), Projectile.oldRot[i] - MathHelper.PiOver2, texture.Size() / 2, Projectile.scale * new Vector2(MathHelper.Lerp(0.8f, 0.2f, (float)i / (float)Projectile.oldPos.Length), 1f), SpriteEffects.None, 0);
 			texture = (Texture2D)ModContent.Request<Texture2D>(Projectile.ai[0] == 2f ? GlowTexture : Texture);
 			Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, texture.Height / Main.projFrames[Projectile.type] * Projectile.frame, texture.Width, texture.Height / Main.projFrames[Projectile.type]), lightColor, Projectile.rotation, new Vector2(texture.Width - 7, texture.Height * 0.5f), Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
 			return false;
@@ -58,3 +58,4 @@ namespace ShatteredFate.Content.Projectiles.Ranged
 	}
 
 }
+
