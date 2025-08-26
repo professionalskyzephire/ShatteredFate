@@ -15,14 +15,14 @@ namespace ShatteredFate.Content.Items.Weapons.Ranged
 		public override void SetDefaults() {
 			Item.width = 16;
 			Item.height = 16;
-			Item.holdStyle = 8;
+			Item.holdStyle = 8; //custom holdstyle
 			Item.useStyle = 5;
 			Item.useTime = 45;
 			Item.useAnimation = 45;
 			Item.damage = 15;
 			Item.autoReuse = true;
 			Item.DamageType = DamageClass.Ranged;
-			Item.knockBack = 1;
+			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(gold: 8, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.shoot = ModContent.ProjectileType<Content.Projectiles.Ranged.OldCrossbow>();
@@ -36,4 +36,5 @@ namespace ShatteredFate.Content.Items.Weapons.Ranged
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) => false;
 	}
+
 }
