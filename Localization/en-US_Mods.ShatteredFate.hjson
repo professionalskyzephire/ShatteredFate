@@ -13,7 +13,7 @@ Items: {
 
 	OldCrossbow: {
 		DisplayName: Old Crossbow
-		Tooltip: 
+		Tooltip:
 			'''
 			<left> to fire a singular bolt that attaches to enemies or the ground
 			Hold <right> to load five, powerful golden bolts
@@ -28,7 +28,7 @@ Items: {
 
 	Starstaff: {
 		DisplayName: Starstaff
-		Tooltip: 
+		Tooltip:
 			'''
 			<left> to create a shower of 2-3 stars on your cursor location
 			<right> to summon 3 controllable stars that follow your cursor
@@ -45,5 +45,13 @@ Projectiles: {
 	Starstaff.DisplayName: Starstaff Star
 }
 
+Configs: {
+	SFClientConfig: {
+		DisplayName: Shattered Fate (Client)
 
-
+		MusicReplacementsActive: {
+			Label: Music Replacements Active
+			Tooltip: Enables custom music tracks for certain biomes, events and bosses.
+		}
+	}
+}

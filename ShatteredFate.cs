@@ -8,7 +8,10 @@ namespace ShatteredFate
 {
 	public class ShatteredFate : Mod
 	{
- 		public override void Load() {
+		public static SFClientConfig clientConfig;
+ 		public override void Load()
+	    {
+		    clientConfig = ModContent.GetInstance<SFClientConfig>();
    			//used for overriding vanilla fallen star spawning
 			Terraria.On_WorldGen.UpdateWorld += (orig) => {
 				float starfallBoost = Star.starfallBoost;
@@ -64,7 +67,13 @@ namespace ShatteredFate
 				}
 			};
 		}
-		public const string VanillaTexture = "Terraria/Images/";
+
+	    public override void Unload()
+	    {
+		    clientConfig = null;
+	    }
+
+	    public const string VanillaTexture = "Terraria/Images/";
 		public const string ExtrasPath = "ShatteredFate/Extras/";
 		public const string BlankTexture = "ShatteredFate/Extras/Invisible";
 		public const string MagicPixel = "ShatteredFate/Extras/MagicPixel";
