@@ -1,14 +1,14 @@
 Buffs: {
 	Cooldown_OldFrypan: {
-		Description: The frying pan can't reflect the projectiles yet.
-		DisplayName: Reflect Cooldown
+		Description: Old Frypan can't reflect the projectiles yet
+		DisplayName: You're Cooked
 	}
 }
 
 Items: {
 	CosmicDust: {
 		DisplayName: Cosmic Dust
-		Tooltip: ""
+		Tooltip: A tangible mass of cosmic dust. Has some arcane properties.
 	}
 
 	OldCrossbow: {
@@ -23,7 +23,13 @@ Items: {
 
 	OldFrypan: {
 		DisplayName: Old Frypan
-		Tooltip: It can no longer be used for cooking, but at least it's still good for smashing the heads of your enemies.
+		Tooltip: 
+			'''
+			Charge up the strike.
+			Fully charged blows can reflect projectiles. Cooldown 5 seconds.
+			Critical hits deal 200%-450% of the weapon's damage.
+			'It can no longer be used for cooking, but at least it's still good for smashing the heads of your enemies.'
+			'''
 	}
 
 	Starstaff: {
@@ -37,7 +43,7 @@ Items: {
 }
 
 Projectiles: {
-	FallingCosmicDust.DisplayName: Falling Cosmic Dust
+	FallingCosmicDust.DisplayName: Cosmic Dust
 	OldFrypan_Hold.DisplayName: Old Frypan
 	OldFrypanStomp.DisplayName: Old Frypan
 	OldCrossbow.DisplayName: Old Crossbow
@@ -50,8 +56,9 @@ Configs: {
 		DisplayName: Shattered Fate (Client)
 
 		MusicReplacementsActive: {
-			Label: Music Replacements Active
+			Label: Music Replacements
 			Tooltip: Enables custom music tracks for certain biomes, events and bosses.
 		}
 	}
 }
+
