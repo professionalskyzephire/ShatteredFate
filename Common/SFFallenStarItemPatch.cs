@@ -6,7 +6,7 @@ using ShatteredFate.Content.Items.Materials;
 
 namespace ShatteredFate.Common
 {
-	public class FallenStarPatch : GlobalItem
+	public class SFFallenStarItemPatch : GlobalItem
 	{
 		public override bool AppliesToEntity(Item item, bool lateInstantiation) => item.type == Terraria.ID.ItemID.FallenStar;
 		public override void SetDefaults(Item item) {
@@ -36,4 +36,5 @@ namespace ShatteredFate.Common
 			return false;
 		}
 	}
+
 }
