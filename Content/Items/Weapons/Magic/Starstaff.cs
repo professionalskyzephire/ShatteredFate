@@ -46,5 +46,8 @@ namespace ShatteredFate.Content.Items.Weapons.Magic
 			if(player.altFunctionUse == 2) player.itemRotation += MathHelper.PiOver4 * player.direction * 0.1f * (float)System.Math.Sin(player.itemAnimation * MathHelper.TwoPi / player.itemAnimationMax);
 		}
 		public override void HoldStyle(Player player, Rectangle itemFrame) => player.itemRotation += MathHelper.PiOver4 * player.direction * 0.4f;
+  		//Note: Currently trying to figure out how we're supposed to make this crafted by throwing everything in shimmer since wood is shimmered into dirt, making it uncraftable.
+		public override void AddRecipes() => CreateRecipe().AddRecipeGroup(RecipeGroupID.Wood, 15).AddIngredient(ItemID.FallenStar, 10).AddCondition(Condition.NearShimmer).Register();
 	}
 }
+
