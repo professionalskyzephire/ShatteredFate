@@ -12,6 +12,20 @@ namespace ShatteredFate
  		public override void Load()
 	    {
 		    clientConfig = ModContent.GetInstance<SFClientConfig>();
+			//change name of fallen stars
+			Terraria.On_Item.AffixName += (orig, self) => {
+				if(self.type == 75) return Terraria.Localization.Language.GetTextValue("Mods.ShatteredFate.Items.CosmicDust.DisplayName");
+				return orig(self);
+			};
+			//prevent fallen stars from despawning
+			Terraria.On_Item.DespawnIfMeetingConditions += (orig, self, i) => {
+				if(self.type == 75) {
+					int oldStack = self.stack;
+					self.ChangeItemType(ModContent.ItemType<Content.Items.Materials.CosmicDust>());
+					self.stack = oldStack;
+				}
+				else orig(self, i);
+			};
    			//used for overriding vanilla fallen star spawning
 			Terraria.On_WorldGen.UpdateWorld += (orig) => {
 				float starfallBoost = Star.starfallBoost;
