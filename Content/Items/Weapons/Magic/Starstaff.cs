@@ -9,10 +9,7 @@ namespace ShatteredFate.Content.Items.Weapons.Magic
 {
 	public class Starstaff : ModItem
 	{
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-			ItemID.Sets.gunProj[Type] = true;
-		}
+		public override void SetStaticDefaults() => Item.ResearchUnlockCount = 1;
 		public override void SetDefaults() {
 			Item.width = 16;
 			Item.height = 16;
@@ -33,10 +30,10 @@ namespace ShatteredFate.Content.Items.Weapons.Magic
 			Item.UseSound = SoundID.Item9;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			position.Y -= 480;
+			position.Y -= 1000;
 			if(Main.myPlayer == player.whoAmI) for(int i = -1; i <= 1; i++) {
 				velocity = Vector2.Normalize(Main.MouseWorld - position) * velocity.Length();
-				int x = Projectile.NewProjectile(source, position + velocity.RotatedBy(MathHelper.PiOver2 * i) * MathHelper.Pi, velocity, type, damage, knockback, player.whoAmI, i == 0 ? -2f : player.altFunctionUse, player.altFunctionUse == 2 || i == 0 ? -1f : Main.MouseWorld.Y, i);
+				int x = Projectile.NewProjectile(source, position + velocity.RotatedBy(MathHelper.PiOver2 * i) * MathHelper.Pi, velocity, type, damage, knockback, player.whoAmI, i == 0 ? -2f : player.altFunctionUse, i);
 				NetMessage.SendData(27, -1, -1, null, x);
 			}
 			return false;
