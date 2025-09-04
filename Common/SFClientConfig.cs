@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
-namespace ShatteredFate;
+namespace ShatteredFate.Common;
 
 public class SFClientConfig : ModConfig
 {

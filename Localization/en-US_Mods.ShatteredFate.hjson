@@ -23,7 +23,7 @@ Items: {
 
 	OldFrypan: {
 		DisplayName: Old Frypan
-		Tooltip: 
+		Tooltip:
 			'''
 			Charge up the strike.
 			Fully charged blows can reflect projectiles. Cooldown 5 seconds.
@@ -61,4 +61,3 @@ Configs: {
 		}
 	}
 }
-

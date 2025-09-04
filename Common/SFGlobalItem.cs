@@ -1,9 +1,9 @@
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace ShatteredFate
+namespace ShatteredFate.Common
 {
 	public class SFGlobalItem : GlobalItem
 	{
