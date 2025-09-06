@@ -37,6 +37,10 @@ public class SFPlayer : ModPlayer
         if (MagnetismAbilityCooldown > 0)
         {
             MagnetismAbilityCooldown--;
+            if (SFMod.MagnetismKey.JustPressed)
+            {
+                Main.NewText("Hypermagnetism is on cooldown for " + (MagnetismAbilityCooldown / 60 + 1) + " more seconds.", Color.Orange);
+            }
         }
         else if (SFMod.MagnetismKey.JustPressed && MagnetismAbility)
         {

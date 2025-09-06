@@ -16,7 +16,8 @@ public class MagnetismBuff : ModBuff
         if (modPlayer.MagnetismAbility) return false;
         
         modPlayer.MagnetismStacks++;
-        if (player.GetModPlayer<SFPlayer>().MagnetismStacks < 29) return false;
+        if (player.GetModPlayer<SFPlayer>().MagnetismStacks < 14) return false;
+        Main.NewText("Hypermagnetism ability unlocked! Press the assigned key to activate Hypermagnetism for 15 seconds. (1 minute cooldown)", 50, 255, 130);
         player.GetModPlayer<SFPlayer>().MagnetismAbility = true;
         return false;
     }
