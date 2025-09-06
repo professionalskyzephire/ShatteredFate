@@ -12,7 +12,7 @@ public class MagnetismPotion : ModItem
         Item.useStyle = ItemUseStyleID.DrinkLiquid;
         Item.useAnimation = Item.useTime = 15;
         Item.consumable = true;
-        Item.buffTime = 3600;
+        Item.buffTime = 60*60;
         Item.buffType = ModContent.BuffType<MagnetismBuff>();
         Item.width = 24;
         Item.height = 36;

@@ -12,7 +12,7 @@ public class AntidotePotion : ModItem
         Item.useStyle = ItemUseStyleID.DrinkLiquid;
         Item.useAnimation = Item.useTime = 15;
         Item.consumable = true;
-        Item.buffTime = 3600;
+        Item.buffTime = 60*60*15;
         Item.buffType = ModContent.BuffType<AntidoteBuff>();
         Item.width = 24;
         Item.height = 36;

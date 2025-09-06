@@ -60,9 +60,8 @@ Items: {
 		DisplayName: Magnetism Potion
 		Tooltip:
 			'''
-			      Temporarily greatly increases the player's item grab range.
-			      'Drinking too many of these at a time might have unexpected results...'
-			      
+            Temporarily greatly increases the player's item grab range.
+            'Drinking too many of these at a time might have unexpected results...'  
 			'''
 	}
 
