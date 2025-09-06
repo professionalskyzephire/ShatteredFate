@@ -21,4 +21,22 @@ public class AntidotePotion : ModItem
         Item.ResearchUnlockCount = 20;
         Item.maxStack = 999;
     }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe().
+            AddIngredient(ItemID.BottledWater).
+            AddIngredient(ItemID.JungleSpores, 3).
+            AddIngredient(ItemID.Stinger, 3).
+            AddTile(TileID.AlchemyTable).
+            AddConsumeIngredientCallback(Recipe.IngredientQuantityRules.Alchemy).
+            Register();
+        
+        CreateRecipe().
+            AddIngredient(ItemID.BottledWater).
+            AddIngredient(ItemID.JungleSpores, 3).
+            AddIngredient(ItemID.Stinger, 3).
+            AddTile(TileID.Bottles).
+            Register();
+    }
 }

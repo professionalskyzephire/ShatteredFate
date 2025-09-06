@@ -62,6 +62,7 @@ public class SFPlayer : ModPlayer
     public override void ResetEffects()
     {
         GrabRangeBoost = 0;
+        PackOExplosives = false;
     }
 
     public override void OnHurt(Player.HurtInfo info)
