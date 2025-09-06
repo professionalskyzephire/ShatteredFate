@@ -22,5 +22,10 @@ namespace ShatteredFate.Common
 				modifiers.CritDamage += bonusCritDamage;
 			}
 		}
+
+		public override void GrabRange(Item item, Player player, ref int grabRange)
+		{
+			grabRange += player.GetModPlayer<SFPlayer>().GrabRangeBoost;
+		}
 	}
 }

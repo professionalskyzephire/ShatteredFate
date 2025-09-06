@@ -3,6 +3,21 @@ Buffs: {
 		Description: Old Frypan can't reflect the projectiles yet
 		DisplayName: You're Cooked
 	}
+
+	MagnetismBuff: {
+		DisplayName: Magnetism
+		Description: Item grab range is greatly increased.
+	}
+
+	HypermagnetismBuff: {
+		DisplayName: Hyper Magnetism
+		Description: Item grab range is massively increased.
+	}
+
+	AntidoteBuff: {
+		DisplayName: Antidote
+		Description: You are immune to poison.
+	}
 }
 
 Items: {
@@ -40,6 +55,30 @@ Items: {
 			<right> to summon 3 controllable stars that follow your cursor
 			'''
 	}
+
+	MagnetismPotion: {
+		DisplayName: Magnetism Potion
+		Tooltip:
+			'''
+			      Temporarily greatly increases the player's item grab range.
+			      'Drinking too many of these at a time might have unexpected results...'
+			      
+			'''
+	}
+
+	AntidotePotion: {
+		DisplayName: Antidote
+		Tooltip: Grants temporary immunity to poison.
+	}
+
+	PackOExplosives: {
+		DisplayName: Pack-o'-Explosives
+		Tooltip:
+			'''
+			Makes the player explode on hit.
+			'Looks rather peaceful, eh?'
+			'''
+	}
 }
 
 Projectiles: {
@@ -49,6 +88,7 @@ Projectiles: {
 	OldCrossbow.DisplayName: Old Crossbow
 	OldCrossbowBolt.DisplayName: Old Crossbow Bolt
 	Starstaff.DisplayName: Starstaff Star
+	Explosion.DisplayName: Explosion
 }
 
 Configs: {
@@ -60,4 +100,9 @@ Configs: {
 			Tooltip: Enables custom music tracks for certain biomes, events and bosses.
 		}
 	}
+}
+
+Keybinds: {
+	"Accessory Ability Key.DisplayName": Accessory  Ability  Key
+	"Hypermagnetism Key.DisplayName": Hypermagnetism  Key
 }
