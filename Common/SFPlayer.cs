@@ -64,7 +64,7 @@ public class SFPlayer : ModPlayer
     {
         if (PackOExplosives && PackOExplosivesCooldown == 0)
         {
-            PackOExplosivesCooldown = 60 * 5;
+            PackOExplosivesCooldown = 60 * 3;
             int proj = Projectile.NewProjectile(Player.GetSource_Misc(""), Player.Center, Vector2.Zero,
                 ModContent.ProjectileType<Explosion>(), 500, 0f);
             Player.Hurt(PlayerDeathReason.ByProjectile(Player.whoAmI, proj), 500, 0);
