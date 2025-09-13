@@ -1,3 +1,4 @@
-displayName = Shattered Fate (placeholder)
+﻿displayName = Shattered Fate (placeholder)
 author = MZFZ and the SF Dev Team
+modReferences = InnoVault
 version = 0.1
