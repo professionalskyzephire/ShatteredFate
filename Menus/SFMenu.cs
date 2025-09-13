@@ -1,32 +1,33 @@
 ﻿using InnoVault;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-using System;
-using ReLogic.Content;
-using InnoVault.PRT;
 
 namespace ShatteredFate.Menus
 {
-    [VaultLoaden("Menus/")]
+    [VaultLoaden("Menus")]
     internal class SFMenu : ModMenu
     {
         //Texture Resources
-        public static Texture2D BackgroundStarless; //Starless background
-        public static Texture2D BackgroundStarlessFont; //Front mask for the starless background
-        public static Asset<Texture2D> Moon;               //Moon
-        public static Texture2D Star;               //Stars
+        public static Texture2D BackgroundStarless;//Starless background
+        public static Texture2D BackgroundStarlessFont;//Front mask for the starless background
+        public static Asset<Texture2D> Moon;//Moon
+        public static Asset<Texture2D> LogoAsset;
+        public static Texture2D Star;//Stars
         [VaultLoaden("@InnoVault/Assets/placeholder2")]
-        public static Texture2D Pixel;              //1x1 white pixel texture, used for drawing shooting star tails and for shaders
+        public static Texture2D Pixel;//1x1 white pixel texture, used for drawing shooting star tails and for shaders
 
         internal static float Sengs = 0f;
 
         //Star Management
         private static List<MenuStar> stars;
         private static bool resourcesInitialized = false;
-        private const int STAR_COUNT = 200; //Increase the number of stars to make the sky denser
+        private const int STAR_COUNT = 200;//Increase the number of stars to make the sky denser
 
         //Shooting Star Management
         private static ShootingStar shootingStar;
@@ -36,6 +37,8 @@ namespace ShatteredFate.Menus
         internal static float moonScale = 1f;
 
         public override Asset<Texture2D> MoonTexture => Moon;
+
+        public override Asset<Texture2D> Logo => LogoAsset;
 
         //Music and background style remain unchanged
         public override int Music => MusicLoader.GetMusicSlot("ShatteredFate/Sounds/Music/best_hl_intro_ever");
@@ -85,7 +88,7 @@ namespace ShatteredFate.Menus
             }
 
             //Update the moon's pulsing effect, using a Sine function for a smooth transition
-            moonScale = 1f + 0.02f * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2f);
+            moonScale = 0.8f + 0.012f * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2f);
 
             //Update the state of each star
             foreach (var star in stars) {
@@ -139,7 +142,10 @@ namespace ShatteredFate.Menus
 
             Main.spriteBatch.Draw(BackgroundStarlessFont, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * Sengs);
 
-            return false;
+            drawColor *= Sengs;
+            logoDrawCenter.Y += Main.screenHeight / 12;
+
+            return true;
         }
     }
 
@@ -150,13 +156,13 @@ namespace ShatteredFate.Menus
         public override void SetProperty() {
             PRTLayersMode = PRTLayersModeEnum.None;
             //Generate a random position within the top half of the screen
-            Position = new Vector2(Main.rand.NextFloat(Main.screenWidth), Main.rand.NextFloat(Main.screenHeight / 2) - 20);
+            Position = new Vector2(Main.rand.NextFloat(Main.screenWidth), Main.rand.NextFloat(Main.screenHeight / 2));
             Scale = Main.rand.NextFloat(0.2f, 0.6f);
             Frame = TexValue.GetRectangle(Main.rand.Next(4), 4);
             //Assign different movement speeds based on star size to create a parallax effect
             float speed = Scale * 0.05f + 0.02f;
             Velocity = new Vector2(speed, speed * 0.1f);
-            ai[0] = Main.rand.NextFloat((float)Math.PI * 2); //Random phase to make stars twinkle asynchronously
+            ai[0] = Main.rand.NextFloat((float)Math.PI * 2);//Random phase to make stars twinkle asynchronously
         }
 
         public override void AI() {
@@ -204,8 +210,8 @@ namespace ShatteredFate.Menus
         private Vector2 position;
         private Vector2 velocity;
         private int life;
-        private const int MAX_LIFE = 120; //Duration of the shooting star
-        private const int TAIL_LENGTH = 30; //Tail length
+        private const int MAX_LIFE = 120;//Duration of the shooting star
+        private const int TAIL_LENGTH = 30;//Tail length
 
         public bool IsDone => life <= 0;
 
@@ -235,7 +241,7 @@ namespace ShatteredFate.Menus
             Vector2 tailEnd = position - Vector2.Normalize(velocity) * TAIL_LENGTH * (life / (float)MAX_LIFE);
             float rotation = velocity.ToRotation() + MathHelper.Pi;
             float length = Vector2.Distance(position, tailEnd);
-            float alpha = (float)Math.Sin(life / (float)MAX_LIFE * Math.PI); //Use a Sine function to achieve a fade-in and fade-out effect
+            float alpha = (float)Math.Sin(life / (float)MAX_LIFE * Math.PI);//Use a Sine function to achieve a fade-in and fade-out effect
 
             //Draw the glowing core
             spriteBatch.Draw(SFMenu.Pixel, position, null, Color.White * alpha, 0f, Vector2.One / 2, 4f, SpriteEffects.None, 0f);
@@ -246,8 +252,8 @@ namespace ShatteredFate.Menus
                 new Rectangle(0, 0, 1, 1),
                 new Color(200, 220, 255) * alpha * 0.7f * SFMenu.Sengs,
                 rotation,
-                new Vector2(0, 0.5f), //The origin is at the start of the tail
-                new Vector2(length, 1.5f), //Use Scale to stretch the pixel into a line
+                new Vector2(0, 0.5f),//The origin is at the start of the tail
+                new Vector2(length, 1.5f),//Use Scale to stretch the pixel into a line
                 SpriteEffects.None, 0);
         }
     }
@@ -269,7 +275,7 @@ namespace ShatteredFate.Menus
             if (SFMenu.BackgroundStarless != null) {
                 Main.spriteBatch.Draw(SFMenu.BackgroundStarless, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * SFMenu.Sengs);
             }
-            return false; //Prevent the original background drawing logic from running
+            return false;//Prevent the original background drawing logic from running
         }
     }
 }
