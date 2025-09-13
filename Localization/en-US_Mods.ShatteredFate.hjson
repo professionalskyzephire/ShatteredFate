@@ -60,8 +60,8 @@ Items: {
 		DisplayName: Magnetism Potion
 		Tooltip:
 			'''
-            Temporarily greatly increases the player's item grab range.
-            'Drinking too many of these at a time might have unexpected results...'  
+			         Temporarily greatly increases the player's item grab range.
+			         'Drinking too many of these at a time might have unexpected results...'  
 			'''
 	}
 
@@ -78,6 +78,15 @@ Items: {
 			'Looks rather peaceful, eh?'
 			'''
 	}
+
+	WreckingBall: {
+		DisplayName: Wrecking Ball
+		Tooltip: 
+			'''
+			Can break tiles when launched.
+			Ciritcal hits deal 200% of the weapon's damage.
+			'''
+	}
 }
 
 Projectiles: {
@@ -88,6 +97,7 @@ Projectiles: {
 	OldCrossbowBolt.DisplayName: Old Crossbow Bolt
 	Starstaff.DisplayName: Starstaff Star
 	Explosion.DisplayName: Explosion
+	WreckingBallProjectile.DisplayName: Wrecking Ball
 }
 
 Configs: {
