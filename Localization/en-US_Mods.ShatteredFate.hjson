@@ -94,6 +94,7 @@ Projectiles: {
 	Starstaff.DisplayName: Starstaff Star
 	Explosion.DisplayName: Explosion
 	WreckingBallProjectile.DisplayName: Wrecking Ball
+	AntiqueDaggerProjectile.DisplayName: Antique Dagger
 }
 
 Configs: {
