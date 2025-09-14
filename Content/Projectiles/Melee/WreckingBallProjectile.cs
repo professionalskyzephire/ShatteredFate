@@ -113,6 +113,7 @@ namespace ShatteredFate.Content.Projectiles.Melee
                                 Projectile.netUpdate = true;
                                 Projectile.ResetLocalNPCHitImmunity();
                                 Projectile.localNPCHitCooldown = movingHitCooldown;
+                                Projectile.tileCollide = false;
                                 break;
                             }
                         }
@@ -149,7 +150,7 @@ namespace ShatteredFate.Content.Projectiles.Melee
                         }
                         player.ChangeDir((player.Center.X < Projectile.Center.X).ToDirectionInt());
                         Projectile.localNPCHitCooldown = movingHitCooldown;
-                        TryMineTiles(Projectile.position, Projectile.width, Projectile.height);
+                        TryMineTiles(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height);
 
                         break;
                     }
@@ -249,10 +250,10 @@ namespace ShatteredFate.Content.Projectiles.Melee
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            if (CurrentAIState == AIState.LaunchingForward) {
+            /*if (CurrentAIState == AIState.LaunchingForward) {
                 Projectile.velocity = oldVelocity;
                 return false;
-            }
+            }*/
 
             int defaultLocalNPCHitCooldown = 10;
             int impactIntensity = 0;
@@ -325,6 +326,7 @@ namespace ShatteredFate.Content.Projectiles.Melee
             bool hitUnbreakableTile = false;
             float hits = 0;
             for (int i = startX; i <= endX; i++) {
+                bool triedPickAboved = false;
                 for (int j = startY; j <= endY; j++) {
                     Tile tile = Main.tile[i, j];
                     if (tile.HasTile && !Main.tileHammer[tile.TileType]) {
@@ -342,7 +344,12 @@ namespace ShatteredFate.Content.Projectiles.Melee
                             player.PickTile(i, j, 10000);
                         }
                         if (tile.HasTile) {
-                            hitUnbreakableTile = true;
+                            if(j == startY && !triedPickAboved) {
+                                j -= 2;
+                                StateTimer--;
+                                hits -= 0.9f;
+                                triedPickAboved = true;
+                            } else hitUnbreakableTile = true;
                         }
                     }
                 }
@@ -350,9 +357,10 @@ namespace ShatteredFate.Content.Projectiles.Melee
             Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * (Projectile.velocity.Length() - hits);
 
             if (hitUnbreakableTile && CurrentAIState == AIState.LaunchingForward) {
-                CurrentAIState = AIState.Retracting;
+                Projectile.tileCollide = true;
+                /*CurrentAIState = AIState.Retracting;
                 StateTimer = 0f;
-                Projectile.netUpdate = true;
+                Projectile.netUpdate = true;*/
             }
         }
         public override bool? CanDamage() {

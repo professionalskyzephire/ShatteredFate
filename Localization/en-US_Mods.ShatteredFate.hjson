@@ -83,6 +83,11 @@ Items: {
 		DisplayName: Wrecking Ball
 		Tooltip: Can break tiles when launched. Can break tiles mineable with pickaxes up to Gold/Platinum.
 	}
+
+	AntiqueDagger: {
+		DisplayName: Antique Dagger
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
