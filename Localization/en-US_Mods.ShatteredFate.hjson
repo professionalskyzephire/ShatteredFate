@@ -93,6 +93,11 @@ Items: {
 		DisplayName: Fused Gemstone
 		Tooltip: ""
 	}
+	
+	CuriousCandle: {
+		DisplayName: Curious Candle
+		Tooltip: Spawns homing fireballs when held. If there are no enemies nearby, the fireballs will stack behind your back.
+	}
 }
 
 Projectiles: {
@@ -113,6 +118,7 @@ Projectiles: {
 	LargeEmeraldPiece.DisplayName: Large Emerald Piece
 	LargeDiamond.DisplayName: Large Diamond
 	LargeDiamondPiece.DisplayName: Large Diamond Piece
+	CuriousCandle_Fireball.DisplayName: Curious Candle
 }
 
 Configs: {
