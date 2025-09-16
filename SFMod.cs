@@ -4,6 +4,7 @@ using System;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -34,10 +35,13 @@ namespace ShatteredFate
             AccessoryAbilityKey = KeybindLoader.RegisterKeybind(this, "Accessory Ability Key", Keys.X);
             MagnetismKey = KeybindLoader.RegisterKeybind(this, "Hypermagnetism Key", Keys.Q);
             //change name of fallen stars
-            Terraria.On_Item.AffixName += (orig, self) => {
-                if (self.type == ItemID.FallenStar) return Terraria.Localization.Language.GetTextValue("Mods.ShatteredFate.Items.CosmicDust.DisplayName");
-                return orig(self);
-            };
+			Terraria.On_Item.AffixName += (orig, self) => {
+				//change name of fallen stars
+				if(self.type == 75) return Language.GetTextValue("Mods.ShatteredFate.Items.CosmicDust.DisplayName");
+				//change name of amber staff
+				if(self.type == 3377 && ModContent.GetInstance<SFReworksConfig>().GemStaves) return orig(self).Replace(Language.GetTextValue("ItemName.Amber"), Language.GetTextValue("Mods.ShatteredFate.Items.FusedGemstone.DisplayName"));
+				return orig(self);
+			};
             //prevent fallen stars from despawning
             Terraria.On_Item.DespawnIfMeetingConditions += (orig, self, i) => {
                 if (self.type == ItemID.FallenStar) {
