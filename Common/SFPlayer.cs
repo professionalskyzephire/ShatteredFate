@@ -75,7 +75,14 @@ public class SFPlayer : ModPlayer
             Player.Hurt(PlayerDeathReason.ByProjectile(Player.whoAmI, proj), 500, 0);
         }
     }
-
+	public override void ModifyHitByProjectile(Projectile projectile, ref Player.HurtModifiers modifiers) {
+		if(ModContent.GetInstance<SFReworksConfig>().GemStaves && Player.ownedProjectileCounts[ModContent.ProjectileType<Content.Projectiles.Magic.LargeDiamond>()] > 0) {
+			modifiers.FinalDamage /= 2;
+			projectile.velocity *= -1f;
+			projectile.hostile = false;
+			projectile.friendly = true;
+		}
+	}
     public override void SaveData(TagCompound tag)
     {
         tag.Add("wasInHardmode", wasInHardmode);
