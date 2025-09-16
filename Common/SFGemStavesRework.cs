@@ -87,6 +87,16 @@ namespace ShatteredFate.Common
 				break;
 			}
 		}
+  		public override void HoldItem(Item item, Player player) {
+			switch(item.type) {
+				case ItemID.TopazStaff:
+					player.statDefense += 5;
+				break;
+				case ItemID.EmeraldStaff:
+					player.moveSpeed += 0.1f;
+				break;
+			}
+		}
 		public override bool CanUseItem(Item item, Player player) {
 			if(staffCooldown > 0 && item.type == ItemID.EmeraldStaff) return false;
 			return item.type == ItemID.AmberStaff || player.HasItem(ModContent.ItemType<Content.Items.Materials.FusedGemstone>());
@@ -164,4 +174,5 @@ namespace ShatteredFate.Common
 		}
 		public override float UseSpeedMultiplier(Item item, Player player) => player.altFunctionUse == 2 ? 0.5f : 1f;
 	}
+
 }
