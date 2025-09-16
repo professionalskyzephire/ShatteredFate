@@ -27,6 +27,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			Projectile.timeLeft = 2;
 			Projectile.Center = Main.player[Projectile.owner].Center;
 			if(Projectile.alpha > 0) Projectile.alpha -= 17;
+  			if(Main.player[Projectile.owner].dead) Projectile.Kill();
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
@@ -42,4 +43,5 @@ namespace ShatteredFate.Content.Projectiles.Magic
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) => overPlayers.Add(index);
 	}
+
 }
