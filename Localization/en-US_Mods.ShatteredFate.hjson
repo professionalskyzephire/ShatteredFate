@@ -88,6 +88,11 @@ Items: {
 		DisplayName: Antique Dagger
 		Tooltip: ""
 	}
+
+	FusedGemstone: {
+		DisplayName: Fused Gemstone
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -100,6 +105,14 @@ Projectiles: {
 	Explosion.DisplayName: Explosion
 	WreckingBallProjectile.DisplayName: Wrecking Ball
 	AntiqueDaggerProjectile.DisplayName: Antique Dagger
+	GemStaff.DisplayName: Gem Staff
+	AmethystStaff.DisplayName: Amethyst Staff
+	LargeSapphire.DisplayName: Large Sapphire
+	LargeRuby.DisplayName: Large Ruby
+	LargeEmerald.DisplayName: Large Emerald
+	LargeEmeraldPiece.DisplayName: Large Emerald Piece
+	LargeDiamond.DisplayName: Large Diamond
+	LargeDiamondPiece.DisplayName: Large Diamond Piece
 }
 
 Configs: {
@@ -111,9 +124,18 @@ Configs: {
 			Tooltip: Enables custom music tracks for certain biomes, events and bosses.
 		}
 	}
+	SFReworksConfig: {
+		DisplayName: Shattered Fate Vanilla Changes (Server)
+
+		GemStaves: {
+			Label: Gem Staves
+			Tooltip: Reworks gem staves and replaces the amber staff with the Fused Gemstone staff
+		}
+	}
 }
 
 Keybinds: {
 	"Accessory Ability Key.DisplayName": Accessory  Ability  Key
 	"Hypermagnetism Key.DisplayName": Hypermagnetism  Key
 }
+
