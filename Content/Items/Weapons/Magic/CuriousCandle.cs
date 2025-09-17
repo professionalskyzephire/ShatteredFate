@@ -45,7 +45,7 @@ public class CuriousCandle : ModItem
         Item.knockBack = 4f;
     }
 
-    public override void HoldItem(Player player)
+	public override void HoldItem(Player player)
     {
 		// Make sure to only run the projectile spawn logic on the player
 		if (player.whoAmI != Main.myPlayer)
@@ -79,10 +79,22 @@ public class CuriousCandle : ModItem
         _spawnTimer = 0;
     }
 
+	public override void HoldItemFrame(Player player)
+	{
+		base.HoldItemFrame(player);
+	}
+
 	public override void HoldStyle(Player player, Rectangle heldItemFrame)
 	{
         player.itemLocation.X -= 12 * player.direction;
         player.itemLocation.Y += 12 * player.gravDir;
+	}
+
+	public override void Update(ref float gravity, ref float maxFallSpeed)
+	{
+		// Add light to the item's center
+		Lighting.AddLight(Item.Center, new Color(235, 93, 175).ToVector3());
+
 	}
 
 	private class CuriousCandleAnimation : DrawAnimation

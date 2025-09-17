@@ -96,7 +96,11 @@ Items: {
 
 	CuriousCandle: {
 		DisplayName: Curious Candle
-		Tooltip: Spawns homing fireballs when held. If there are no enemies nearby, the fireballs will stack behind your back.
+		Tooltip:
+			'''
+			Spawns homing fireballs when held.
+			If there are no enemies nearby, the fireballs will stack behind your back.
+			'''
 	}
 }
 

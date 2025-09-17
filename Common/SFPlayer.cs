@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
-using Terraria.Localization;
+using static Terraria.ModLoader.ModContent;
 
 public class SFPlayer : ModPlayer
 {
@@ -57,6 +57,12 @@ public class SFPlayer : ModPlayer
             HardmodeMusicTimer = 60 * 198;
         }
         wasInHardmode = Main.hardMode;
+
+        // When the Curious Candle is held, add light to the item's location
+        if (Player.HeldItem?.type == ItemType<ShatteredFate.Content.Items.Weapons.Magic.CuriousCandle>())
+        {
+            Lighting.AddLight(Player.itemLocation, new Color(235, 93, 175).ToVector3());
+        }
     }
 
     public override void ResetEffects()
