@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using System;
 
@@ -67,7 +68,10 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						}
 						else {
 							armRotOff -= MathHelper.SmoothStep(MathHelper.PiOver4 * 3f, MathHelper.PiOver2, animTime) * player.direction * player.gravDir;
-							if(Main.myPlayer == player.whoAmI && player.itemTime == 1) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<AmethystStaff>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0]));
+							if(player.itemTime == 1) {
+								SoundEngine.PlaySound(SoundID.Item8, player.Center);
+								if(Main.myPlayer == player.whoAmI) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<AmethystStaff>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0]));
+							}
 							Projectile.rotation -= MathHelper.SmoothStep(0f, MathHelper.PiOver4 * 3f, animTime) * player.direction * player.gravDir;
 						}
 					break;
@@ -94,7 +98,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						else {
 							armRotOff -= MathHelper.SmoothStep(MathHelper.PiOver4 * 3f, MathHelper.PiOver2, animTime) * player.direction * player.gravDir;
 							if(player.itemTime == 1) {
-								player.HeldItem.GetGlobalItem<Common.SFGemStavesRework>().staffCooldown = 900;
+								SoundEngine.PlaySound(SoundID.DeerclopsIceAttack, player.Center);
 								if(Main.myPlayer == player.whoAmI) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center, Vector2.Zero, ModContent.ProjectileType<LargeDiamond>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0]));
 							}
 							Projectile.rotation -= MathHelper.SmoothStep(0f, MathHelper.PiOver4 * 3f, animTime) * player.direction * player.gravDir;
@@ -122,7 +126,6 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						}
 						else {
 							armRotOff -= MathHelper.SmoothStep(MathHelper.PiOver4 * 3f, MathHelper.PiOver2, animTime) * player.direction * player.gravDir;
-							if(player.itemAnimation == 1) player.HeldItem.GetGlobalItem<Common.SFGemStavesRework>().staffCooldown = 300;
 							Projectile.rotation -= MathHelper.SmoothStep(0f, MathHelper.PiOver4 * 3f, animTime) * player.direction * player.gravDir;
 						}
 					break;
@@ -148,7 +151,10 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						}
 						else {
 							armRotOff -= MathHelper.SmoothStep(MathHelper.PiOver4 * 3f, MathHelper.PiOver2, animTime) * player.direction * player.gravDir;
-							if(Main.myPlayer == player.whoAmI && player.itemTime == 1) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<LargeRuby>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0]));
+							if(player.itemTime == 1) {
+								SoundEngine.PlaySound(SoundID.Item46, player.Center);
+								if(Main.myPlayer == player.whoAmI) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<LargeRuby>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0]));
+							}
 							Projectile.rotation -= MathHelper.SmoothStep(0f, MathHelper.PiOver4 * 3f, animTime) * player.direction * player.gravDir;
 						}
 					break;
@@ -175,7 +181,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						else {
 							armRotOff -= MathHelper.SmoothStep(MathHelper.PiOver4 * 3f, MathHelper.PiOver2, animTime) * player.direction * player.gravDir;
 							if(player.itemTime == 1) {
-								player.HeldItem.GetGlobalItem<Common.SFGemStavesRework>().staffCooldown = 600;
+								SoundEngine.PlaySound(SoundID.Item46, player.Center);
 								if(Main.myPlayer == player.whoAmI) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<LargeSapphire>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0]));
 							}
 							Projectile.rotation -= MathHelper.SmoothStep(0f, MathHelper.PiOver4 * 3f, animTime) * player.direction * player.gravDir;
@@ -201,6 +207,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						}
 						else break;
 						if(Projectile.ai[1] > 0f) {
+							SoundEngine.PlaySound(SoundID.Item43, player.Center);
 							if(Main.myPlayer == player.whoAmI) for(int i = 0; i < MathHelper.Min(Projectile.ai[1], player.itemTimeMax * 5f) / (float)player.itemTimeMax; i++) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Projectile.Center + Vector2.Normalize(Projectile.velocity) * 42f, Projectile.velocity * player.HeldItem.shootSpeed + Main.rand.NextVector2Circular(2, 2), (int)Projectile.ai[0], Projectile.damage, Projectile.knockBack, player.whoAmI));
 							Projectile.ai[1] = 0f;
 						}
