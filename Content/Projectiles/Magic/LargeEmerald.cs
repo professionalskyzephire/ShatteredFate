@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace ShatteredFate.Content.Projectiles.Magic
@@ -53,8 +54,13 @@ namespace ShatteredFate.Content.Projectiles.Magic
 					player.altFunctionUse = 2;
 					player.itemAnimationMax *= 3;
 					player.itemAnimation = player.itemAnimationMax;
+					SoundEngine.PlaySound(SoundID.Item4, player.Center);
 				}
-				if(++Projectile.ai[1] == player.itemAnimationMax) Projectile.velocity = Vector2.Normalize(Projectile.velocity) * 16f;
+				if(++Projectile.ai[1] == player.itemAnimationMax) {
+					Projectile.velocity = Vector2.Normalize(Projectile.velocity) * 16f;
+					SoundEngine.PlaySound(SoundID.Item46, Projectile.Center);
+					player.AddBuff(ModContent.BuffType<Content.Buffs.Debuffs.EmeraldStaffCooldown>(), 300);
+				}
 				else return;
 			}
 			if(Projectile.alpha > 0) Projectile.alpha -= 15;
