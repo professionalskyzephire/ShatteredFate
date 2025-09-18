@@ -26,7 +26,6 @@ namespace ShatteredFate.Content.Projectiles.Magic
 				projectile.velocity = Vector2.Normalize(projectile.Center - Projectile.Center) * 12f;
 				projectile.penetrate = 1;
 				Projectile.ai[1] = 10f;
-				Projectile.velocity -= projectile.velocity * 0.2f;
 			}
 			else if(projectile.ai[2] == 0f) {
 				projectile.velocity += Vector2.Normalize(Projectile.Center - projectile.Center) * 0.35f;
@@ -42,6 +41,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 				ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings { PositionInWorld = Projectile.Center, MovementVector = spawnPos * 0.4f, UniqueInfoPiece = (byte)(Main.rgbToHsl(Color.Red).X * 255f)});
 			}
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, Projectile.Center);
+			Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Content.Buffs.Debuffs.RubyStaffCooldown>(), 600);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
