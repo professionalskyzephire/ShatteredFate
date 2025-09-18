@@ -27,7 +27,9 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			Projectile.timeLeft = 2;
 			Projectile.Center = Main.player[Projectile.owner].Center;
 			if(Projectile.alpha > 0) Projectile.alpha -= 17;
-  			if(Main.player[Projectile.owner].dead) Projectile.Kill();
+			if(Projectile.localAI[1] == 0f) Projectile.localAI[1] = Main.player[Projectile.owner].statLife;
+  			if(Main.player[Projectile.owner].dead || (Projectile.localAI[1] - Main.player[Projectile.owner].statLife) > (Main.masterMode ? 100 : Main.expertMode ? 75 : 50)) Projectile.Kill();
+			else if(Main.player[Projectile.owner].statLife != Projectile.localAI[1]) Projectile.localAI[1] = Main.player[Projectile.owner].statLife;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
@@ -35,6 +37,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			return false;
 		}
 		public override void OnKill(int timeLeft) {
+			Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Content.Buffs.Debuffs.DiamondStaffCooldown>(), 900);
 			Main.player[Projectile.owner].immune = true;
 			Main.player[Projectile.owner].immuneAlpha = 0;
 			Main.player[Projectile.owner].immuneTime = 30; 
@@ -43,5 +46,4 @@ namespace ShatteredFate.Content.Projectiles.Magic
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) => overPlayers.Add(index);
 	}
-
 }
