@@ -40,6 +40,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			for(int i = 0; i < 3; i++) Main.EntitySpriteDraw(texture, Projectile.Center + Vector2.UnitY.RotatedBy(Main.GlobalTimeWrappedHourly * MathHelper.Pi * player.direction * player.gravDir + MathHelper.TwoPi / 3f * i) - Main.screenPosition, null, Color.Purple with {A = 0} * Projectile.Opacity, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * player.HeldItem.scale, player.direction > 0 ? player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically : player.gravDir > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically, 0);
 			return false;
 		}
+		public override void OnKill(int timeLeft) => Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Content.Buffs.Debuffs.AmethystStaffCooldown>(), 900);
 		public override bool ShouldUpdatePosition() => false;
 	}
 }
