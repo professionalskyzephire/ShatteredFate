@@ -9,6 +9,7 @@ namespace ShatteredFate.Common
 {
     public class SFFallenStarItemPatch : GlobalItem
     {
+		public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<SFReworksConfig>().FallenStarReplacement;
         public override bool AppliesToEntity(Item item, bool lateInstantiation) => item.type == Terraria.ID.ItemID.FallenStar;
         public override void SetDefaults(Item item) {
             item.useTime = item.useAnimation = item.useStyle = ItemUseStyleID.None;
