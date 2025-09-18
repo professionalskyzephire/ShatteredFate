@@ -23,11 +23,13 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			foreach(Projectile projectile in Main.ActiveProjectiles) if((Projectile.ai[1] >= 10f || projectile.type == (int)Projectile.ai[0]) && projectile.whoAmI != Projectile.whoAmI && projectile.Hitbox.Intersects(Projectile.Hitbox)) {
 				if(Projectile.ai[1] < 10f) Projectile.ai[1]++;
 				else {
-					if(Main.myPlayer == Projectile.owner) for(int i = 0; i < 10; i++) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(Main.player[Projectile.owner].GetSource_ItemUse(Main.player[Projectile.owner].HeldItem), Projectile.Center, Main.rand.NextVector2Circular(10f, 10f), (int)Projectile.ai[0], Projectile.damage, Projectile.knockBack, Projectile.owner, 0f, 0f, 1f));
+					for(int i = 0; i < 10; i++) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(Main.player[Projectile.owner].GetSource_ItemUse(Main.player[Projectile.owner].HeldItem), Projectile.Center, Main.rand.NextVector2CircularEdge(1f, 1f) * Main.rand.Next(80, 110) * 0.1f, (int)Projectile.ai[0], Projectile.damage, Projectile.knockBack, Projectile.owner, 0f, 0f, 1f));
 					Projectile.Kill();
 				}
 				projectile.Kill();
 			}
+			if(Projectile.Distance(Main.player[Projectile.owner].Center) > 160) Projectile.velocity += Vector2.Normalize(Main.player[Projectile.owner].Center - Projectile.Center) * 0.34f;
+			Projectile.velocity *= 0.96f;
 			if(Projectile.alpha > 0) Projectile.alpha -= 15;
 		}
 		public override void OnKill(int timeLeft) {
@@ -36,6 +38,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 				ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings { PositionInWorld = Projectile.Center, MovementVector = spawnPos * 0.4f, UniqueInfoPiece = (byte)(Main.rgbToHsl(Color.Blue).X * 255f)});
 			}
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, Projectile.Center);
+			Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Content.Buffs.Debuffs.SapphireStaffCooldown>(), 600);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
