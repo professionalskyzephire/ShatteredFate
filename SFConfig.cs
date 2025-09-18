@@ -16,5 +16,9 @@ namespace ShatteredFate
 		[ReloadRequired]
 		[DefaultValue(true)]
 		public bool GemStaves;
+		[ReloadRequired]
+		[DefaultValue(true)]
+		public bool FallenStarReplacement;
 	}
+
 }
