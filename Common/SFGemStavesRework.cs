@@ -4,21 +4,15 @@ using Terraria;
 using Terraria.ID;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using ShatteredFate.Content.Buffs.Debuffs;
 using ShatteredFate.Content.Items.Materials;
+using ShatteredFate.Content.Projectiles.Magic;
 
 namespace ShatteredFate.Common
 {
 	public class SFGemStavesRework : GlobalItem
 	{
-		public int staffCooldown = 0;
-		public override bool IsCloneable => true;
-		public override bool InstancePerEntity => true;
 		public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<SFReworksConfig>().GemStaves;
-		public override GlobalItem Clone(Item item, Item itemClone) {
-			SFGemStavesRework sf = base.Clone(item, itemClone) as SFGemStavesRework;
-			sf.staffCooldown = sf.staffCooldown;
-			return sf;
-		}
 		public override bool AppliesToEntity(Item item, bool lateInstantiation) => item.type == ItemID.AmberStaff || item.type == ItemID.AmethystStaff || item.type == ItemID.DiamondStaff || item.type == ItemID.EmeraldStaff || item.type == ItemID.RubyStaff || item.type == ItemID.SapphireStaff || item.type == ItemID.TopazStaff;
 		public override void SetDefaults(Item item) {
 			item.holdStyle = -1;
@@ -35,6 +29,7 @@ namespace ShatteredFate.Common
 				item.mana = 5;
 				item.knockBack = 5f;
 				item.useTime = item.useAnimation = 25;
+				item.rare = 0;
 				item.value = Item.sellPrice(silver: 50);
 			}
 			else if(item.type == ItemID.DiamondStaff) {
@@ -42,6 +37,7 @@ namespace ShatteredFate.Common
 				item.mana = 10;
 				item.knockBack = 7f;
 				item.useTime = item.useAnimation = 30;
+				item.rare = 1;
 				item.value = Item.sellPrice(gold: 3);
 			}
 			else if(item.type == ItemID.EmeraldStaff) {
@@ -71,20 +67,9 @@ namespace ShatteredFate.Common
 				item.knockBack = 5f;
 				item.useTime = item.useAnimation = 20;
 				item.channel = true;
+				item.rare = 0;
+				item.UseSound = SoundID.Item4;
 				item.value = Item.sellPrice(silver: 25);
-			}
-		}
-		public override void UpdateInventory(Item item, Player player) {
-			switch(item.type) {
-				case ItemID.DiamondStaff:
-					if(staffCooldown > 0 && player.ownedProjectileCounts[ModContent.ProjectileType<Content.Projectiles.Magic.LargeDiamond>()] == 0) staffCooldown--;
-				break;
-				case ItemID.EmeraldStaff:
-					if(staffCooldown > 0) staffCooldown--;
-				break;
-				case ItemID.SapphireStaff:
-					if(staffCooldown > 0 && player.ownedProjectileCounts[ModContent.ProjectileType<Content.Projectiles.Magic.LargeSapphire>()] == 0) staffCooldown--;
-				break;
 			}
 		}
   		public override void HoldItem(Item item, Player player) {
@@ -98,12 +83,41 @@ namespace ShatteredFate.Common
 			}
 		}
 		public override bool CanUseItem(Item item, Player player) {
-			if(staffCooldown > 0 && item.type == ItemID.EmeraldStaff) return false;
+			if(player.HasBuff(ModContent.BuffType<EmeraldStaffCooldown>()) && item.type == ItemID.EmeraldStaff) return false;
+			if(!item.channel) item.UseSound = player.altFunctionUse == 2 ? SoundID.Item4 : SoundID.Item43;
 			return item.type == ItemID.AmberStaff || player.HasItem(ModContent.ItemType<Content.Items.Materials.FusedGemstone>());
 		}
 		public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if(Main.myPlayer == player.whoAmI && player.ownedProjectileCounts[ModContent.ProjectileType<Content.Projectiles.Magic.GemStaff>()] == 0) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Content.Projectiles.Magic.GemStaff>(), damage, knockback, player.whoAmI, type));
+			if(Main.myPlayer == player.whoAmI && player.ownedProjectileCounts[ModContent.ProjectileType<GemStaff>()] == 0) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<GemStaff>(), damage, knockback, player.whoAmI, type));
 			return false;
+		}
+		public override void ModifyTooltips(Item item, System.Collections.Generic.List<TooltipLine> tooltips) {
+			string Texture = "Mods.ShatteredFate.ItemReworks.";
+			switch(item.type) {
+				case ItemID.AmberStaff:
+					Texture += "FusedGemstone";
+				break;
+				case ItemID.AmethystStaff:
+					Texture += "Amethyst";
+				break;
+				case ItemID.DiamondStaff:
+					Texture += "Diamond";
+				break;
+				case ItemID.EmeraldStaff:
+					Texture += "Emerald";
+				break;
+				case ItemID.RubyStaff:
+					Texture += "Ruby";
+				break;
+				case ItemID.SapphireStaff:
+					Texture += "Sapphire";
+				break;
+				case ItemID.TopazStaff:
+					Texture += "Topaz";
+				break;
+			}
+			Texture += "Staff";
+			foreach(TooltipLine m in tooltips) if(m.Mod == "Terraria" && m.Name == "Knockback") m.Text += "\n" + Terraria.Localization.Language.GetTextValue(Texture);
 		}
 		public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			string Texture = "ShatteredFate/Content/Items/Weapons/Magic/";
@@ -165,14 +179,12 @@ namespace ShatteredFate.Common
 			return false;
 		}
 		public override bool AltFunctionUse(Item item, Player player) {
-			if(staffCooldown > 0) return false;
-			if(item.type == ItemID.AmethystStaff) return player.ownedProjectileCounts[ModContent.ProjectileType<Content.Projectiles.Magic.AmethystStaff>()] == 0;
-			if(item.type == ItemID.SapphireStaff) return player.ownedProjectileCounts[ModContent.ProjectileType<Content.Projectiles.Magic.LargeSapphire>()] == 0;
-			if(item.type == ItemID.RubyStaff) return player.ownedProjectileCounts[ModContent.ProjectileType<Content.Projectiles.Magic.LargeRuby>()] == 0;
-			if(item.type == ItemID.DiamondStaff) return player.ownedProjectileCounts[ModContent.ProjectileType<Content.Projectiles.Magic.LargeDiamond>()] == 0;
+			if(item.type == ItemID.AmethystStaff) return player.ownedProjectileCounts[ModContent.ProjectileType<AmethystStaff>()] == 0 && !player.HasBuff(ModContent.BuffType<AmethystStaffCooldown>());
+			if(item.type == ItemID.SapphireStaff) return player.ownedProjectileCounts[ModContent.ProjectileType<LargeSapphire>()] == 0 && !player.HasBuff(ModContent.BuffType<SapphireStaffCooldown>());
+			if(item.type == ItemID.RubyStaff) return player.ownedProjectileCounts[ModContent.ProjectileType<LargeRuby>()] == 0 && !player.HasBuff(ModContent.BuffType<RubyStaffCooldown>());
+			if(item.type == ItemID.DiamondStaff) return player.ownedProjectileCounts[ModContent.ProjectileType<LargeDiamond>()] == 0 && !player.HasBuff(ModContent.BuffType<DiamondStaffCooldown>());
 			return false;
 		}
 		public override float UseSpeedMultiplier(Item item, Player player) => player.altFunctionUse == 2 ? 0.5f : 1f;
 	}
-
 }
