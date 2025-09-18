@@ -1,3 +1,49 @@
+ItemReworks: {
+	AmberStaff:
+		'''
+		Randomly fires projectiles from all previous gem staves.
+		'The ultimate Gem Staff.'
+		'''
+	AmethystStaff:
+		'''
+		Shoots piercing amethyst bolts.
+		Right-click to create a phantom copy behind the player that rapidly shoots amethyst bolts.
+		This ability has a 15 seconds cooldown before it can be used again.
+		'''
+	DiamondStaff:
+		'''
+		Spawns diamond bolts that leech the mana off the hit enemies. 
+		Right-click to create a large diamond that will cover the player. 
+		This diamond reflects all hostile projectiles that touch it, halving their damage. 
+		On the 5th hit, the diamond shatters and launches the damaging shards that fly in all directions, also giving the player 30 iframes. 
+		This ability has a 15 second cooldown before it can be used again.
+		'''
+	EmeraldStaff:
+		'''
+		Rapidly shoots emerald bolts.
+		Hit enemies with this weapon to form a large emerald that can be launched into a nearby enemy and will split into a large amount of damaging shards.
+		While holding the staff, the holder's movement speed is increased by 10%.
+		'''
+	SapphireStaff:
+		'''
+		Fires sapphire bolts that slow down enemies. 
+		Right-click to create a large sapphire in the cursor potion that can store multiple sapphire bolts when they hit it.
+		Right-click again to launch the sapphire, hitting it again with any projectile will destroy it and release the homing sapphire bolts.
+		'''
+	RubyStaff:
+		'''
+		Launches piercing ruby bolts.
+		Right-click to spawn a large ruby that pulls the ruby bolts towards it.
+		When these bolts hit the large ruby, it will reflect them with 150% of their original velocity and cause them to slowly home into the nearby enemies.
+		Has a small chance to supercharge ruby bolts when reflecting them, supercharged ruby bolts pierce infinitely and fly with 250% of their original velocity.
+		'''
+	TopazStaff:
+		'''
+		Hold left-click to charge an erratic spread of topaz bolts. 
+		While holding the weapon, the holder's defense is increased by 5.
+		'''
+}
+
 Buffs: {
 	Cooldown_OldFrypan: {
 		Description: Old Frypan can't reflect the projectiles yet
@@ -17,6 +63,31 @@ Buffs: {
 	AntidoteBuff: {
 		DisplayName: Antidote
 		Description: You are immune to poison.
+	}
+
+	AmethystStaffCooldown: {
+		DisplayName: Amethyst Staff Cooldown
+		Description: Cannot resummon the phantom copy yet
+	}
+
+	DiamondStaffCooldown: {
+		DisplayName: Diamond Staff Cooldown
+		Description: Cannot shield yourself yet
+	}
+
+	EmeraldStaffCooldown: {
+		DisplayName: Emerald Staff Cooldown
+		Description: Cannot use the emerald staff yet
+	}
+
+	RubyStaffCooldown: {
+		DisplayName: Ruby Staff Cooldown
+		Description: Cannot summon ruby crystal yet
+	}
+
+	SapphireStaffCooldown: {
+		DisplayName: Sapphire Staff Cooldown
+		Description: Cannot summon sapphire crystal yet
 	}
 }
 
@@ -149,3 +220,4 @@ Keybinds: {
 	"Accessory Ability Key.DisplayName": Accessory  Ability  Key
 	"Hypermagnetism Key.DisplayName": Hypermagnetism  Key
 }
+
