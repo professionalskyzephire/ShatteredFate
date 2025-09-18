@@ -37,13 +37,13 @@ namespace ShatteredFate
             //change name of fallen stars
 			Terraria.On_Item.AffixName += (orig, self) => {
 				//change name of fallen stars
-				if(self.type == 75) return Language.GetTextValue("Mods.ShatteredFate.Items.CosmicDust.DisplayName");
+				if(self.type == 75 && ModContent.GetInstance<SFReworksConfig>().FallenStarReplacement) return Language.GetTextValue("Mods.ShatteredFate.Items.CosmicDust.DisplayName");
 				//change name of amber staff
 				if(self.type == 3377 && ModContent.GetInstance<SFReworksConfig>().GemStaves) return orig(self).Replace(Language.GetTextValue("ItemName.Amber"), Language.GetTextValue("Mods.ShatteredFate.Items.FusedGemstone.DisplayName"));
 				return orig(self);
 			};
             //prevent fallen stars from despawning
-            Terraria.On_Item.DespawnIfMeetingConditions += (orig, self, i) => {
+            if(ModContent.GetInstance<SFReworksConfig>().FallenStarReplacement) Terraria.On_Item.DespawnIfMeetingConditions += (orig, self, i) => {
                 if (self.type == ItemID.FallenStar) {
                     int oldStack = self.stack;
                     self.ChangeItemType(ModContent.ItemType<Content.Items.Materials.CosmicDust>());
@@ -52,7 +52,7 @@ namespace ShatteredFate
                 else orig(self, i);
             };
             //used for overriding vanilla fallen star spawning
-            Terraria.On_WorldGen.UpdateWorld += (orig) => {
+            if(ModContent.GetInstance<SFReworksConfig>().FallenStarReplacement) Terraria.On_WorldGen.UpdateWorld += (orig) => {
                 float starfallBoost = Star.starfallBoost;
                 Star.starfallBoost = 0f;
                 orig();
@@ -89,7 +89,7 @@ namespace ShatteredFate
                 }
                 Star.starfallBoost = starfallBoost;
             };
-            Terraria.On_Projectile.AI_148_StarSpawner += (orig, self) => {
+            if(ModContent.GetInstance<SFReworksConfig>().FallenStarReplacement) Terraria.On_Projectile.AI_148_StarSpawner += (orig, self) => {
                 self.ai[0] += (float)Main.dayRate;
                 if (self.localAI[0] == 0f && Main.netMode != NetmodeID.Server) {
                     self.localAI[0] = 1f;
