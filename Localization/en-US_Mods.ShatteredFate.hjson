@@ -213,6 +213,11 @@ Configs: {
 			Label: Gem Staves
 			Tooltip: Reworks gem staves and replaces the amber staff with the Fused Gemstone staff
 		}
+
+		FallenStarReplacement: {
+			Label: Fallen Star Replacement
+			Tooltip: Replaces Fallen Stars with Cosmic Dust
+		}
 	}
 }
 
@@ -220,4 +225,5 @@ Keybinds: {
 	"Accessory Ability Key.DisplayName": Accessory  Ability  Key
 	"Hypermagnetism Key.DisplayName": Hypermagnetism  Key
 }
+
 
