@@ -1,9 +1,4 @@
 ItemReworks: {
-	AmberStaff:
-		'''
-		Randomly fires projectiles from all previous gem staves.
-		'The ultimate Gem Staff.'
-		'''
 	AmethystStaff:
 		'''
 		Shoots piercing amethyst bolts.
@@ -23,6 +18,11 @@ ItemReworks: {
 		Rapidly shoots emerald bolts.
 		Hit enemies with this weapon to form a large emerald that can be launched into a nearby enemy and will split into a large amount of damaging shards.
 		While holding the staff, the holder's movement speed is increased by 10%.
+		'''
+	FusedGemstoneStaff:
+		'''
+		Randomly fires projectiles from all previous gem staves.
+		'The ultimate Gem Staff.'
 		'''
 	SapphireStaff:
 		'''
@@ -227,3 +227,4 @@ Keybinds: {
 }
 
 Tiles.CuriousCandleTile.MapEntry: Curious Candle
+
