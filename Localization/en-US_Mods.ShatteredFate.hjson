@@ -127,6 +127,11 @@ Items: {
 			'''
 	}
 
+	SandSpell: {
+		DisplayName: Sand Spell
+		Tooltip: Creates a localized sandstorm that pulls enemies and dropped items into itself.
+	}
+
 	MagnetismPotion: {
 		DisplayName: Magnetism Potion
 		Tooltip:
@@ -194,6 +199,7 @@ Projectiles: {
 	LargeDiamond.DisplayName: Large Diamond
 	LargeDiamondPiece.DisplayName: Large Diamond Piece
 	CuriousCandleFireball.DisplayName: Curious Candle
+	SandSpell.DisplayName: Dust Devil
 }
 
 Configs: {
@@ -227,4 +233,5 @@ Keybinds: {
 }
 
 Tiles.CuriousCandleTile.MapEntry: Curious Candle
+
 
