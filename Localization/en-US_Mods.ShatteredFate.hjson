@@ -192,6 +192,17 @@ Items: {
 			If there are no enemies nearby, the fireballs will stack behind your back.
 			'''
 	}
+
+	SanguineLeech: {
+		DisplayName: Sanguine Leech
+		Tooltip: 
+		'''
+		5 summon tag damage
+		Your minions will focus struck enemies
+		Latches onto a hit enemy, slows it down and steals its life.
+		The less health the player has, the more life the whip will steal.
+		'''
+	}
 }
 
 Projectiles: {
@@ -215,6 +226,7 @@ Projectiles: {
 	LargeDiamondPiece.DisplayName: Large Diamond Piece
 	CuriousCandleFireball.DisplayName: Curious Candle
 	SandSpell.DisplayName: Dust Devil
+	SanguineLeech.DisplayName: Sanguine Leech
 }
 
 Configs: {
@@ -248,6 +260,7 @@ Keybinds: {
 }
 
 Tiles.CuriousCandleTile.MapEntry: Curious Candle
+
 
 
 
