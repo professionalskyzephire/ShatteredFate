@@ -31,6 +31,12 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			}
 			else if(Projectile.alpha > 0) Projectile.alpha -= 17;
 			else {
+				if(Projectile.width < 0 && Projectile.height < 0) Projectile.ai[2] = 1f;
+				else if(Main.myPlayer == Projectile.owner) {
+					Projectile.oldPosition.X += Math.Sign(Main.MouseWorld.X - Projectile.Center.X) * 0.3f;
+					Projectile.position.X = Projectile.oldPosition.X;
+					if(Projectile.position.X != Projectile.oldPosition.X) NetMessage.SendData(27, -1, -1, null, Projectile.whoAmI);
+				}
 				Player player = Main.player[Projectile.owner];
 				float pullDist = 160f;
 				foreach(Item item in Main.ActiveItems) if(!item.beingGrabbed && getPull(item.Center) < pullDist) item.velocity += (getPullOrigin(item.Center) - item.Center).SafeNormalize(Vector2.Zero) * (1f - getPull(item.Center) / pullDist);
@@ -53,9 +59,11 @@ namespace ShatteredFate.Content.Projectiles.Magic
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
 			lightColor = Color.Peru with {A = 0} * Projectile.Opacity;
-			for(int k = 0; k < 90; k++) Main.EntitySpriteDraw(texture, Projectile.Center + new Vector2(Vector2.UnitX.RotatedBy(Projectile.rotation + k * 0.3f).X * 3f, MathHelper.Lerp(-216f, 216f, (float)k / 90f)) - Main.screenPosition, null, lightColor * MathHelper.Lerp(0.1f, 0.4f, Vector2.UnitX.RotatedBy(MathHelper.Pi * (float)k / 90f).Y), Projectile.rotation + k * 0.1f, texture.Size() * 0.5f, Projectile.scale * MathHelper.Lerp(1.4f, 0.6f, (float)k / 90f), SpriteEffects.None, 0);
+			int size = (int)((1f - Projectile.height / 448f) * 45f);
+			for(int k = size; k < 90 - size; k++) Main.EntitySpriteDraw(texture, Projectile.Center + new Vector2(Vector2.UnitX.RotatedBy(Projectile.rotation + k * 0.3f).X * 3f, MathHelper.Lerp(-216f, 216f, (float)k / 90f)) - Main.screenPosition, null, lightColor * MathHelper.Lerp(0.1f, 0.4f, Vector2.UnitX.RotatedBy(MathHelper.Pi * (float)k / 90f).Y), Projectile.rotation + k * 0.1f, texture.Size() * 0.5f, Projectile.scale * MathHelper.Lerp(1.4f, 0.6f, (float)k / 90f), SpriteEffects.None, 0);
 			return false;
 		}
+		public override bool OnTileCollide(Vector2 oldPos) => false;
 		public override bool ShouldUpdatePosition() => false;
 	}
 }
