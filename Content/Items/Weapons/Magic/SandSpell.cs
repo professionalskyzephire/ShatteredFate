@@ -27,11 +27,11 @@ namespace ShatteredFate.Content.Items.Weapons.Magic
 			Item.noMelee = true;
 			Item.mana = 20;
 			Item.channel = true;
-			Item.UseSound = SoundID.Item60;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if(Main.myPlayer == player.whoAmI && player.ownedProjectileCounts[type] == 0) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(source, Main.MouseWorld, Vector2.Zero, type, damage, knockback, player.whoAmI));
 			return false;
 		}
+		public override bool CanUseItem(Player player) => !Collision.SolidCollision(Main.MouseWorld - new Vector2(8f), 16, 16) || (player.ownedProjectileCounts[Item.shoot] > 0 && player.itemTime == 0);
 	}
 }
