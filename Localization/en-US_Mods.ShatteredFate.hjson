@@ -196,12 +196,12 @@ Items: {
 	SanguineLeech: {
 		DisplayName: Sanguine Leech
 		Tooltip: 
-		'''
-		5 summon tag damage
-		Your minions will focus struck enemies
-		Latches onto a hit enemy, slows it down and steals its life.
-		The less health the player has, the more life the whip will steal.
-		'''
+			'''
+			5 summon tag damage
+			Your minions will focus struck enemies
+			Latches onto a hit enemy, slows it down and steals its life.
+			The less health the player has, the more life the whip will steal.
+			'''
 	}
 }
 
@@ -260,6 +260,7 @@ Keybinds: {
 }
 
 Tiles.CuriousCandleTile.MapEntry: Curious Candle
+
 
 
 
