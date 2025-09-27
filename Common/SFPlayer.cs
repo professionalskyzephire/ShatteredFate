@@ -89,6 +89,9 @@ public class SFPlayer : ModPlayer
 			projectile.friendly = true;
 		}
 	}
+	public override void ModifyHitNPCWithProj(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
+		if(!projectile.npcProj && !projectile.trap && projectile.IsMinionOrSentryRelated && target.HasBuff(ModContent.BuffType<ShatteredFate.Content.Buffs.Debuffs.SanguineLeechDebuff>())) modifiers.FlatBonusDamage += 5 * Terraria.ID.ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type];
+	}
     public override void SaveData(TagCompound tag)
     {
         tag.Add("wasInHardmode", wasInHardmode);
