@@ -26,6 +26,7 @@ namespace ShatteredFate.Content.Projectiles.Whips
 			Player player = Main.player[Projectile.owner];
 			float swingSpeed = player.itemTimeMax * 2f / 3f * Projectile.MaxUpdates;
 			if(Projectile.ai[2] > 0f && player.channel && player.HasMinionAttackTargetNPC && Projectile.ai[0] >= swingSpeed) {
+				Main.npc[player.MinionAttackTargetNPC].AddBuff(ModContent.BuffType<Content.Buffs.Debuffs.SanguineLeechDebuff>(), 2);
 				Vector2 toLatch = Main.npc[player.MinionAttackTargetNPC].Center - Main.GetPlayerArmPosition(Projectile);
 				Projectile.localAI[1] = toLatch.Length() / 60f;
 				if(Projectile.localAI[2] < 10f) Projectile.localAI[2]++;
@@ -106,7 +107,10 @@ namespace ShatteredFate.Content.Projectiles.Whips
 				NetMessage.SendData(27, -1, -1, null, Projectile.whoAmI);
 				return;
 			}
-			if(Projectile.ai[2] == 0f) return;
+			if(Projectile.ai[2] == 0f) {
+				if(target.CanBeChasedBy(Projectile, false)) target.AddBuff(ModContent.BuffType<Content.Buffs.Debuffs.SanguineLeechDebuff>(), 60);
+				return;
+			}
 			Player player = Main.player[Projectile.owner];
 			int healAmount = (int)MathHelper.Lerp(7f * 1.25f, 3f, (float)player.statLife / (float)player.statLifeMax2);
 			if(healAmount > 7) healAmount = 7;
