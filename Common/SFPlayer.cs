@@ -1,12 +1,17 @@
 ﻿using ShatteredFate;
 using ShatteredFate.Content.Buffs;
+using ShatteredFate.Content.Buffs.Debuffs;
 using ShatteredFate.Content.Projectiles.Misc;
+using ShatteredFate.Content.Projectiles.Magic;
+using ShatteredFate.Content.Items.Accessories;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
+using System.Collections.Generic;
+using System.Linq;
 
 public class SFPlayer : ModPlayer
 {
@@ -67,7 +72,7 @@ public class SFPlayer : ModPlayer
     }
 	public override void FrameEffects() {
 		if(NecklaceOfNihility) {
-			var n = ModContent.GetInstance<ShatteredFate.Content.Items.Accessories.NecklaceOfNihility>();
+			var n = ModContent.GetInstance<NecklaceOfNihility>();
 			Player.head = EquipLoader.GetEquipSlot(Mod, n.Name, EquipType.Head);
 			Player.body = EquipLoader.GetEquipSlot(Mod, n.Name, EquipType.Body);
 			Player.legs = EquipLoader.GetEquipSlot(Mod, n.Name, EquipType.Legs);
@@ -91,7 +96,7 @@ public class SFPlayer : ModPlayer
         }
     }
 	public override void ModifyHitByProjectile(Projectile projectile, ref Player.HurtModifiers modifiers) {
-		if(ModContent.GetInstance<SFReworksConfig>().GemStaves && Player.ownedProjectileCounts[ModContent.ProjectileType<ShatteredFate.Content.Projectiles.Magic.LargeDiamond>()] > 0) {
+		if(ModContent.GetInstance<SFReworksConfig>().GemStaves && Player.ownedProjectileCounts[ModContent.ProjectileType<LargeDiamond>()] > 0) {
 			modifiers.FinalDamage /= 2;
 			projectile.velocity *= -1f;
 			projectile.hostile = false;
@@ -99,7 +104,11 @@ public class SFPlayer : ModPlayer
 		}
 	}
 	public override void ModifyHitNPCWithProj(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
-		if(!projectile.npcProj && !projectile.trap && projectile.IsMinionOrSentryRelated && target.HasBuff(ModContent.BuffType<ShatteredFate.Content.Buffs.Debuffs.SanguineLeechDebuff>())) modifiers.FlatBonusDamage += 5 * Terraria.ID.ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type];
+		if(!projectile.npcProj && !projectile.trap && projectile.IsMinionOrSentryRelated && target.HasBuff(ModContent.BuffType<SanguineLeechDebuff>())) modifiers.FlatBonusDamage += 5 * Terraria.ID.ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type];
+	}
+	public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath) {
+		if(!mediumCoreDeath) if(Player.name.Equals("skyzephire")) return new Item[] {new Item(ModContent.ItemType<NecklaceOfNihility>(), 1, 0)};
+		return Enumerable.Empty<Item>();
 	}
     public override void SaveData(TagCompound tag)
     {
