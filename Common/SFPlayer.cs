@@ -65,10 +65,11 @@ public class SFPlayer : ModPlayer
         wasInHardmode = Main.hardMode;
 
         // When the Curious Candle is held, add light to the item's location
-        if (Player.HeldItem?.type == ItemType<ShatteredFate.Content.Items.Weapons.Magic.CuriousCandle>())
+        if (Player.HeldItem?.ModItem is ShatteredFate.Content.Items.Weapons.Magic.CuriousCandle)
         {
             Lighting.AddLight(Player.itemLocation, new Color(235, 93, 175).ToVector3());
         }
+		if(NecklaceOfNihility) Player.AddBuff(ModContent.BuffType<DarkerThanCoal>(), 1);
     }
 	public override void FrameEffects() {
 		if(NecklaceOfNihility) {
