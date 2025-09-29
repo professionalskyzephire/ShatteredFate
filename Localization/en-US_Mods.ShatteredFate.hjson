@@ -203,6 +203,15 @@ Items: {
 			The less health the player has, the more life the whip will steal.
 			'''
 	}
+
+	NecklaceOfNihility: {
+		DisplayName: Necklace Of Nihility
+		Tooltip:
+			'''
+			Transforms the player into a Dark Matter Man when equipped.
+			'[i/s1:1922] Self-inserting is coal.'
+			'''
+	}
 }
 
 Projectiles: {
@@ -260,6 +269,7 @@ Keybinds: {
 }
 
 Tiles.CuriousCandleTile.MapEntry: Curious Candle
+
 
 
 
