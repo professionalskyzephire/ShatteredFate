@@ -22,6 +22,7 @@ public class SFPlayer : ModPlayer
     public bool PackOExplosives;
     // In case you somehow survive the explosion
     public int PackOExplosivesCooldown;
+	public bool NecklaceOfNihility;
     public override void PostUpdate()
     {
         if (!MagnetismAbility && MagnetismStacks > 0 && !Player.HasBuff<MagnetismBuff>())
@@ -64,11 +65,19 @@ public class SFPlayer : ModPlayer
             Lighting.AddLight(Player.itemLocation, new Color(235, 93, 175).ToVector3());
         }
     }
-
+	public override void FrameEffects() {
+		if(NecklaceOfNihility) {
+			var n = ModContent.GetInstance<ShatteredFate.Content.Items.Accessories.NecklaceOfNihility>();
+			Player.head = EquipLoader.GetEquipSlot(Mod, n.Name, EquipType.Head);
+			Player.body = EquipLoader.GetEquipSlot(Mod, n.Name, EquipType.Body);
+			Player.legs = EquipLoader.GetEquipSlot(Mod, n.Name, EquipType.Legs);
+		}
+	}
     public override void ResetEffects()
     {
         GrabRangeBoost = 0;
         PackOExplosives = false;
+		NecklaceOfNihility = false;
     }
 
     public override void OnHurt(Player.HurtInfo info)
