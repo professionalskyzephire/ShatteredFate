@@ -26,14 +26,14 @@ namespace ShatteredFate.Content.Items.Accessories.Artifacts
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual) {
-            // 为玩家添加青色光晕
+            //为玩家添加青色光晕
             Lighting.AddLight(player.Center, new Vector3(0.2f, 0.8f, 0.8f));
 
-            // 标记玩家装备了老灯笼
+            //标记玩家装备了老灯笼
             player.GetModPlayer<OldLanternPlayer>().hasOldLantern = true;
             player.GetModPlayer<OldLanternPlayer>().hideVisual = hideVisual;
 
-            // 照亮周围30x30范围内的敌人
+            //照亮周围30x30范围内的敌人
             for (int i = 0; i < Main.maxNPCs; i++) {
                 NPC npc = Main.npc[i];
                 if (npc.active && !npc.friendly && npc.lifeMax > 5) {
@@ -57,7 +57,7 @@ namespace ShatteredFate.Content.Items.Accessories.Artifacts
         }
 
         public override void PostUpdate() {
-            // 如果装备了老灯笼且没有隐藏视觉效果，创建头顶灯笼弹幕
+            //如果装备了老灯笼且没有隐藏视觉效果，创建头顶灯笼弹幕
             if (hasOldLantern && !hideVisual) {
                 if (Player.CountProjectilesOfID<OldLanternProjectile>() == 0) {
                     if (Main.myPlayer == Player.whoAmI) {
@@ -98,29 +98,29 @@ namespace ShatteredFate.Content.Items.Accessories.Artifacts
         public override void AI() {
             Player player = Main.player[Projectile.owner];
 
-            // 检查玩家是否还装备着老灯笼
+            //检查玩家是否还装备着老灯笼
             if (!player.active || player.dead || !player.GetModPlayer<OldLanternPlayer>().hasOldLantern) {
                 Projectile.Kill();
                 return;
             }
 
-            // 保持弹幕存活
+            //保持弹幕存活
             Projectile.timeLeft = 2;
 
-            // 跟随玩家，位于头顶偏上位置
+            //跟随玩家，位于头顶偏上位置
             Vector2 targetPosition = player.Center + new Vector2(0, -40 - player.gfxOffY);
 
-            // 添加轻微的漂浮动画
+            //添加轻微的漂浮动画
             float floatOffset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * 2f) * 3f;
             targetPosition.Y += floatOffset;
 
-            // 平滑移动到目标位置
+            //平滑移动到目标位置
             Projectile.Center = Vector2.Lerp(Projectile.Center, targetPosition, 0.15f);
 
-            // 添加微弱的青色光照
+            //添加微弱的青色光照
             Lighting.AddLight(Projectile.Center, new Vector3(0.3f, 0.9f, 0.9f));
 
-            // 添加轻微的旋转动画
+            //添加轻微的旋转动画
             Projectile.rotation = (float)Math.Sin(Main.GlobalTimeWrappedHourly * 1.5f) * 0.1f;
         }
 
@@ -135,7 +135,7 @@ namespace ShatteredFate.Content.Items.Accessories.Artifacts
 
             SpriteEffects spriteEffects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            // 绘制发光效果
+            //绘制发光效果
             Color glowColor = new Color(100, 255, 255, 0) * 0.6f;
             for (int i = 0; i < 4; i++) {
                 Vector2 offset = new Vector2(2f, 0).RotatedBy(MathHelper.TwoPi * i / 4f);
@@ -152,7 +152,7 @@ namespace ShatteredFate.Content.Items.Accessories.Artifacts
                 );
             }
 
-            // 绘制主体
+            //绘制主体
             Main.EntitySpriteDraw(
                 texture,
                 drawPosition,
