@@ -16,7 +16,6 @@ namespace ShatteredFate
         public const string ExtrasPath = "ShatteredFate/Extras/";
         public const string BlankTexture = "ShatteredFate/Extras/Invisible";
         public const string MagicPixel = "ShatteredFate/Extras/MagicPixel";
-        internal static SFClientConfig ClientConfig;
         private static Mod _musicMod;
 
         public static ModKeybind AccessoryAbilityKey;
@@ -31,7 +30,6 @@ namespace ShatteredFate
         }
 
         public override void Load() {
-            ClientConfig = ModContent.GetInstance<SFClientConfig>();
             AccessoryAbilityKey = KeybindLoader.RegisterKeybind(this, "Accessory Ability Key", Keys.X);
             MagnetismKey = KeybindLoader.RegisterKeybind(this, "Hypermagnetism Key", Keys.Q);
             //change name of fallen stars
@@ -108,7 +106,6 @@ namespace ShatteredFate
         }
 
         public override void Unload() {
-            ClientConfig = null;
             _musicMod = null;
         }
     }

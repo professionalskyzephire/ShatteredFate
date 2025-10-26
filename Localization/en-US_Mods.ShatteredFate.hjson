@@ -94,6 +94,16 @@ Buffs: {
 		DisplayName: Sapphire Staff Cooldown
 		Description: Cannot summon sapphire crystal yet
 	}
+
+	DarkerThanCoal: {
+		DisplayName: Darker Than Coal
+		Description: Mods.ShatteredFate.Buffs.DarkerThanCoal.Description
+	}
+
+	SanguineLeechDebuff: {
+		DisplayName: Sanguine Leech Debuff
+		Description: Mods.ShatteredFate.Buffs.SanguineLeechDebuff.Description
+	}
 }
 
 Items: {
@@ -104,7 +114,7 @@ Items: {
 
 	AncientSkull: {
 		DisplayName: Ancient Skull
-		Tooltip: 
+		Tooltip:
 			'''
 			Summons ancient skulls that furiously ram into nearby enemies, exploding violently on contact.
 			Does not occupy minion slots.
@@ -195,7 +205,7 @@ Items: {
 
 	SanguineLeech: {
 		DisplayName: Sanguine Leech
-		Tooltip: 
+		Tooltip:
 			'''
 			5 summon tag damage
 			Your minions will focus struck enemies
@@ -211,6 +221,11 @@ Items: {
 			Transforms the player into a Dark Matter Man when equipped.
 			'[i/s1:1922] Self-inserting is coal.'
 			'''
+	}
+
+	OldLantern: {
+		DisplayName: Old Lantern
+		Tooltip: ""
 	}
 }
 
@@ -236,6 +251,7 @@ Projectiles: {
 	CuriousCandleFireball.DisplayName: Curious Candle
 	SandSpell.DisplayName: Dust Devil
 	SanguineLeech.DisplayName: Sanguine Leech
+	OldLanternProjectile.DisplayName: Old Lantern
 }
 
 Configs: {
@@ -269,9 +285,3 @@ Keybinds: {
 }
 
 Tiles.CuriousCandleTile.MapEntry: Curious Candle
-
-
-
-
-
-
