@@ -57,10 +57,11 @@ namespace ShatteredFate.Content.Projectiles.Melee
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if(Projectile.ai[0] > 0f && Main.myPlayer == Projectile.owner) {
+			if(Main.myPlayer == Projectile.owner) if(Projectile.ai[0] > 0f) {
 				Projectile.ai[2] = target.whoAmI + 1;
 				NetMessage.SendData(27, -1, -1, null, Projectile.whoAmI);
 			}
+			else target.AddBuff(ModContent.BuffType<ShatteredFate.Content.Buffs.Debuffs.AntiqueDaggerDoT>(), 60);
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
