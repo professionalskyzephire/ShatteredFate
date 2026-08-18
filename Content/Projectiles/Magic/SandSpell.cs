@@ -41,7 +41,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 				float pullDist = 160f;
 				foreach(Item item in Main.ActiveItems) if(!item.beingGrabbed && getPull(item.Center) < pullDist) item.velocity += (getPullOrigin(item.Center) - item.Center).SafeNormalize(Vector2.Zero) * (1f - getPull(item.Center) / pullDist);
 				foreach(NPC npc in Main.ActiveNPCs) if(npc.knockBackResist > 0f && getPull(npc.Center) < pullDist) npc.velocity += (getPullOrigin(npc.Center) - npc.Center).SafeNormalize(Vector2.Zero) * npc.knockBackResist * (1f - getPull(npc.Center) / pullDist);
-				if(player.HeldItem.ModItem is not ShatteredFate.Content.Items.Weapons.Magic.SandSpell || !player.channel || Projectile.timeLeft == 2) Projectile.ai[2] = 1f;
+				if(player.HeldItem.ModItem is not Items.Weapons.Magic.SandSpell || !player.channel || Projectile.timeLeft == 2) Projectile.ai[2] = 1f;
 			}
 			Projectile.rotation += 0.15f;
 			if(Projectile.rotation > MathHelper.Pi) Projectile.rotation -= MathHelper.TwoPi;

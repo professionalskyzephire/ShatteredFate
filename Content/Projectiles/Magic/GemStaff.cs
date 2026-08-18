@@ -105,6 +105,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						}
 					break;
 					case ItemID.EmeraldStaff:
+                        Projectile.position.Y += 2;
 						Projectile.rotation -= MathHelper.ToRadians(player.direction * player.gravDir) * 0.5f;
 						if(player.altFunctionUse < 2) {
 							if(Main.myPlayer == player.whoAmI && player.itemTime == player.itemTimeMax - 1) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Projectile.Center + Vector2.Normalize(Projectile.velocity) * 48f, Projectile.velocity * player.HeldItem.shootSpeed, (int)Projectile.ai[0], Projectile.damage, Projectile.knockBack, player.whoAmI));
@@ -130,6 +131,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						}
 					break;
 					case ItemID.RubyStaff:
+                        Projectile.position.Y += 10;
 						Projectile.rotation += MathHelper.ToRadians(player.direction * player.gravDir) * 2f;
 						if(player.altFunctionUse < 2) {
 							if(Main.myPlayer == player.whoAmI && player.itemTime == player.itemTimeMax - 1) NetMessage.SendData(27, -1, -1, null, Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Projectile.Center + Vector2.Normalize(Projectile.velocity) * 56f, Projectile.velocity * player.HeldItem.shootSpeed, (int)Projectile.ai[0], Projectile.damage, Projectile.knockBack, player.whoAmI));
@@ -188,6 +190,7 @@ namespace ShatteredFate.Content.Projectiles.Magic
 						}
 					break;
 					case ItemID.TopazStaff:
+                        Projectile.position.Y += -8;
 						armRotOff2 = MathHelper.PiOver2 * -1.4f * player.direction * player.gravDir;
 						Projectile.rotation -= MathHelper.ToRadians(player.direction * player.gravDir) * 0.25f;
 						if(player.channel) {
@@ -224,33 +227,20 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			string Texture = "ShatteredFate/Content/Items/Weapons/Magic/";
 			Vector2 flash = Vector2.Zero;
 			Color color = Color.Transparent;
+            Vector2 scale = new(0, 0);
 			switch(player.HeldItem.type) {
 				case ItemID.AmberStaff:
 					flash += new Vector2(28, -46);
-					switch(Projectile.ai[0]) {
-						default:
-							color = Color.Orange;
-						break;
-						case 121:
-							color = Color.Purple;
-						break;
-						case 122:
-							color = Color.Yellow;
-						break;
-						case 123:
-							color = Color.Blue;
-						break;
-						case 124:
-							color = Color.Green;
-						break;
-						case 125:
-							color = Color.Red;
-						break;
-						case 126:
-							color = Color.White;
-						break;
-					}
-					Texture += "FusedGemstone";
+                    color = Projectile.ai[0] switch {
+                        121 => Color.Purple,
+                        122 => Color.Yellow,
+                        123 => Color.Blue,
+                        124 => Color.Green,
+                        125 => Color.Red,
+                        126 => Color.White,
+                        _ => Color.Orange,
+                    };
+                    Texture += "FusedGemstone";
 				break;
 				case ItemID.AmethystStaff:
 					color = Color.Purple;
@@ -264,12 +254,13 @@ namespace ShatteredFate.Content.Projectiles.Magic
 				break;
 				case ItemID.EmeraldStaff:
 					color = Color.Green;
-					flash += new Vector2(26, -44);
+					flash += new Vector2(42, -52);
 					Texture += "Emerald";
+                    scale.Y += -6;
 				break;
 				case ItemID.RubyStaff:
 					color = Color.Red;
-					flash += new Vector2(28, -48);
+					flash += new Vector2(46, -52);
 					Texture += "Ruby";
 				break;
 				case ItemID.SapphireStaff:
@@ -279,13 +270,13 @@ namespace ShatteredFate.Content.Projectiles.Magic
 				break;
 				case ItemID.TopazStaff:
 					color = Color.Yellow;
-					flash += new Vector2(26, -40);
+					flash += new Vector2(18, -48);
 					Texture += "Topaz";
 				break;
 			}
 			Texture += "Staff";
 			Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
-			Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, lightColor * Projectile.Opacity, Projectile.rotation, new Vector2(player.direction * player.gravDir > 0 ? 4 : texture.Width - 4, player.gravDir > 0 ? texture.Height - 6 : 6), Projectile.scale * player.HeldItem.scale, player.direction > 0 ? player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically : player.gravDir > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically, 0);
+			Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + scale, null, lightColor * Projectile.Opacity, Projectile.rotation, new Vector2(player.direction * player.gravDir > 0 ? 4 : texture.Width - 4, player.gravDir > 0 ? texture.Height - 6 : 6), Projectile.scale * player.HeldItem.scale, player.direction > 0 ? player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically : player.gravDir > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically, 0);
 			flash *= player.Directions * Projectile.scale * player.HeldItem.scale;
 			flash = flash.RotatedBy(Projectile.rotation);
 			color *= (float)System.Math.Sin(MathHelper.Pi * (float)player.itemAnimation / (float)player.itemAnimationMax);

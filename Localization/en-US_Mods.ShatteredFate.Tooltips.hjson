@@ -1,0 +1,36 @@
+Items: {
+	AmuletofRage:
+		'''
+		Getting hit accumulates the rage inside you.
+		After taking enough damage, pressing a <[c/B22222:{0}]> will unleash the accumulated rage for 10 seconds. 
+		While this effect is active, your damage and critical strike chance is increased by 33%. 
+		After this effect wears out, you will not be able to accumulate rage again for 15 seconds.
+		'''
+	S: ""
+}
+
+GlobalItems: {
+	RageItem: {
+		RAbility: Press <{0}> for active rage
+		RagePotion: increses rage by 20
+	}
+}
+
+Buffs: {
+	Rage: {
+		tip0: Your rage: [c/DC143C:{0}] out for [c/B22222:{1}]
+		tip1: "[c/DC143C:You are completely filled with rage]"
+		tip2: The fury will last another: [c/FF8C00:{0}]
+		tip3: The ability recharge will be complete in [c/FF8C00:{0}]
+		tip4: "[c/FF8C00:{0}], time remaining: [c/FF8C00:{1}]"
+	}
+}
+
+Prefixes: {
+	RagePrefix: {
+		DisplayName: Calm
+		Tooltips: Reduces the anger required to become angry by 15
+	}
+
+	S: ""
+}

@@ -1,12 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ID;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 using ShatteredFate.Content.Buffs.Debuffs;
-using ShatteredFate.Content.Items.Materials;
 using ShatteredFate.Content.Projectiles.Magic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace ShatteredFate.Common
 {

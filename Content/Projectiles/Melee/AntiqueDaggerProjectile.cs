@@ -61,7 +61,7 @@ namespace ShatteredFate.Content.Projectiles.Melee
 				Projectile.ai[2] = target.whoAmI + 1;
 				NetMessage.SendData(27, -1, -1, null, Projectile.whoAmI);
 			}
-			else target.AddBuff(ModContent.BuffType<ShatteredFate.Content.Buffs.Debuffs.AntiqueDaggerDoT>(), 60);
+			else target.AddBuff(ModContent.BuffType<Buffs.Debuffs.AntiqueDaggerDoT>(), 60);
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;

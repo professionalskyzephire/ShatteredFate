@@ -104,6 +104,16 @@ Buffs: {
 		DisplayName: Sanguine Leech Debuff
 		Description: Mods.ShatteredFate.Buffs.SanguineLeechDebuff.Description
 	}
+
+	AntiqueDaggerDoT: {
+		DisplayName: Antique Dagger Do T
+		Description: Mods.ShatteredFate.Buffs.AntiqueDaggerDoT.Description
+	}
+
+	Rage: {
+		DisplayName: Rage
+		Description: Shows your rage
+	}
 }
 
 Items: {
@@ -227,6 +237,11 @@ Items: {
 		DisplayName: Old Lantern
 		Tooltip: ""
 	}
+
+	AmuletofRage: {
+		DisplayName: Amulet of Rage
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -282,6 +297,25 @@ Configs: {
 Keybinds: {
 	"Accessory Ability Key.DisplayName": Accessory  Ability  Key
 	"Hypermagnetism Key.DisplayName": Hypermagnetism  Key
+	"Rage Ability Key.DisplayName": Rage Ability Key
+	NotKey: UNBOUND
 }
 
 Tiles.CuriousCandleTile.MapEntry: Curious Candle
+
+NPCs: {
+	ShadyFigure: {
+		DisplayName: Shady Figure
+
+		TownNPCMood: {
+			Content: I am content.
+			NoHome: I hate not having a home.
+			FarFromHome: I am too far from home.
+			LoveSpace: I love having so much space.
+			DislikeCrowded: I dislike how crowded I am.
+			HateCrowded: I hate how crowded I am.
+			LikeNPC_Princess: I like {NPCName}.
+			Princess_LovesNPC: I like {NPCName}.
+		}
+	}
+}

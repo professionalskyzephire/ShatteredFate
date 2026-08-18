@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using ShatteredFate.Common.Players;
 
 namespace ShatteredFate.Common
 {
@@ -25,7 +26,7 @@ namespace ShatteredFate.Common
 
 		public override void GrabRange(Item item, Player player, ref int grabRange)
 		{
-			grabRange += player.GetModPlayer<SFPlayer>().GrabRangeBoost;
+			grabRange += player.GetModPlayer<MagnetismPlayer>().GetGrabRange();
 		}
 	}
 }
