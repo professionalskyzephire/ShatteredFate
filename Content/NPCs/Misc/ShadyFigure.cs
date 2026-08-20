@@ -1,6 +1,8 @@
 ﻿using ShatteredFate.Common.ModSystems.Worlds;
 using ShatteredFate.ModUtils;
+using ShatteredFate.UIElements;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +11,8 @@ namespace ShatteredFate.Content.NPCs.Misc;
 
 [AutoloadHead]
 public class ShadyFigure : ModNPC {
+    ShadyFigureUI chat;
+
     public override void SetStaticDefaults() {
         Main.npcFrameCount[Type] = 25;
         NPCID.Sets.NoTownNPCHappiness[Type] = true;
@@ -28,22 +32,46 @@ public class ShadyFigure : ModNPC {
     public override bool CanBeHitByNPC(NPC attacker) => false;
     public override void AI() {
         if (Main.dayTime) { NPC.active = false; }
-    }
-    public override string GetChat() {
-        return base.GetChat();
-    }
-    public override void ModifyActiveShop(string shopName, Item[] items) {
-        int[] cItems = ModContent.GetInstance<ShadyFigureShop>().GetCurrentShopArray();
-        for (int i = 0; i < cItems.Length; i++) {
-            items[i] = new(cItems[i]);
+        Player player = Main.LocalPlayer;
+        if (player.talkNPC == -1 || Main.npc[player.talkNPC].type != Type) {
+            chat = null;
         }
     }
+    public override string GetChat() => Loc.GetNPCChat("ShadyFigure.Says." + Main.rand.Next(0, 5));
+    public override void ModifyActiveShop(string shopName, Item[] items) {
+        //int[] cItems = ModContent.GetInstance<ShadyFigureShop>().GetCurrentShopArray();
+        //for (int i = 0; i < cItems.Length; i++) {
+        //    items[i] = new(cItems[i]);
+        //}
+    }
     public override void SetChatButtons(ref string button, ref string button2) {
-        button = Lang.inter[28].Value;
+        button = Loc.GetNPCChat("ShadyFigure.Button.0");
     }
     public override void OnChatButtonClicked(bool firstButton, ref string shopName) {
         if (firstButton) {
-            shopName = "ShadyFigureShop";
+            Main.playerInventory = true;
+            Main.stackSplit = 9999;
+            Main.npcChatText = "";
+
+            Player player = Main.LocalPlayer;
+            TryGetTalkNPC(player, out NPC npc);
+            if (chat == null) {
+                chat = new ShadyFigureUI();
+                ModContent.GetInstance<SFMod>().SFUI.SetState(chat);
+            }
+
+            SoundEngine.PlaySound(SoundID.MenuOpen);
         }
+    }
+    public static bool TryGetTalkNPC(Player player, out NPC npc) {
+        npc = null;
+
+        int index = player.talkNPC;
+        if (index < 0 || index >= Main.npc.Length) {
+            return false;
+        }
+
+        npc = Main.npc[index];
+        return npc.active;
     }
 }

@@ -5,10 +5,11 @@ using Terraria.ModLoader;
 namespace ShatteredFate;
 
 public class Loader {
-    // priority: 1 - table, 2 Resources, 3 - hook, 4 - custom data 5 - keyBind
+    // priority: 1 - table, 2 Resources, 3 - hook, 4 - custom data 5 - UIElement 6 - keyBind
 
     public static void Load(Mod mod) {
         Buffs.Load();
+        Items.Load();
 
         Resources.Textures.Load(mod);
         Resources.Sounds.Load();
@@ -20,6 +21,7 @@ public class Loader {
     }
     public static void Unload() {
         Buffs.UnLoad();
+        Items.UnLoad();
 
         Resources.Textures.UnLoad();
         Resources.Sounds.UnLoad();

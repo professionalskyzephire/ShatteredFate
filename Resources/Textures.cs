@@ -7,23 +7,28 @@ using Terraria.ModLoader;
 namespace ShatteredFate.Resources;
 
 public static class Textures {
-    static readonly Asset<Texture2D>[] rageBar = new Asset<Texture2D>[2];
-    static readonly Asset<Texture2D>[] windowBG = new Asset<Texture2D>[2];
+    static readonly Asset<Texture2D>[] _rageBar = new Asset<Texture2D>[2];
+    static readonly Asset<Texture2D>[] _windowBG = new Asset<Texture2D>[2];
+    static readonly Asset<Texture2D>[] _shadyFigureUI = new Asset<Texture2D>[1];
 
-    public static Texture2D[] GetRageBar() => [.. rageBar.Select(i => i.Value)];
-    public static Texture2D[] GetWindowBG() => [.. windowBG.Select(i => i.Value)];
+    public static Texture2D[] GetRageBar() => [.. _rageBar.Select(i => i.Value)];
+    public static Texture2D[] GetWindowBG() => [.. _windowBG.Select(i => i.Value)];
+    public static Texture2D[] GetShadyFigureUI() => [.. _shadyFigureUI.Select(i => i.Value)];
 
     internal static void Load(Mod mod) {
-        rageBar[0] = LoadTextures("RageBuff/BarProgess");
-        rageBar[1] = LoadTextures("RageBuff/Icon");
+        _rageBar[0] = LoadTextures("RageBuff/BarProgess");
+        _rageBar[1] = LoadTextures("RageBuff/Icon");
 
-        windowBG[0] = LoadTextures("WindowBg/Frame");
-        windowBG[1] = LoadTextures("WindowBg/PartofTheFrame");
+        _windowBG[0] = LoadTextures("WindowBg/Frame");
+        _windowBG[1] = LoadTextures("WindowBg/PartofTheFrame");
+
+        _shadyFigureUI[0] = LoadTextures("DialogueBoxes/ShadyFigure/ItemSlot");
 
         Asset<Texture2D> LoadTextures(string name) => mod.Assets.Request<Texture2D>("Extras/" + name, ReLogic.Content.AssetRequestMode.ImmediateLoad);
     }
     internal static void UnLoad() {
-        Array.Clear(rageBar);
-        Array.Clear(windowBG);
+        Array.Clear(_rageBar);
+        Array.Clear(_windowBG);
+        Array.Clear(_shadyFigureUI);
     }
 };

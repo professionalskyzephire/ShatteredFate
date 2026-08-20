@@ -42,7 +42,7 @@ public class RageItem : GlobalItem {
     }
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
         RagePlayer rPlayer = Main.LocalPlayer.GetModPlayer<RagePlayer>();
-        if (item.type == ItemID.RagePotion && PlayersExpansions.CheackAcc(rPlayer.Player, ModContent.ItemType<AmuletofRage>())) { tooltips.Insert(3, new(Mod, $"{SFMod.ModName}:RagePotion", Loc.GetTips("GlobalItems.RageItem.RagePotion"))); };
+        if (item.type == ItemID.RagePotion && PlayersExpansions.CheckAcc(rPlayer.Player, ModContent.ItemType<AmuletofRage>())) { tooltips.Insert(3, new(Mod, $"{SFMod.ModName}:RagePotion", Loc.GetTips("GlobalItems.RageItem.RagePotion"))); };
         if (GetMaxRage() > 0) {
             Color[] transform = [Color.White];
 

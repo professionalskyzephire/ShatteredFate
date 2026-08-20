@@ -14,6 +14,17 @@ GlobalItems: {
 		RAbility: Press <{0}> for active rage
 		RagePotion: increses rage by 20
 	}
+
+	ItemSlots: {
+		-3: Need Item:
+		-2: You have:
+		-1: You not nave item
+		0: In Inventory
+		1: in Pig bank
+		2: in Safe
+		3: in Defender's Forge
+		4: in Void Vault
+	}
 }
 
 Buffs: {

@@ -41,13 +41,13 @@ public class PlayersExpansions : ModPlayer {
     public static FieldInfo GetModedAccSlot() => _getModedAccSlot;
     public static Item[] GetModedAccItemInSlot(Player player) => (Item[])_getModedAccSlot.GetValue(player.GetModPlayer<ModAccessorySlotPlayer>());
 
-    public static bool CheackAcc(Player player, int itemType) {
+    public static bool CheckAcc(Player player, int itemType) {
         bool value = false;
         for (int i = 0; i < 3; i++) { if (player.armor[i].type == itemType) { value = true; break; } }
         for (int i = 0; i < AccessorySlotLoader.MaxVanillaSlotCount; i++) { if (player.armor[i].type == itemType) { value = true; break; } }
         for (int i = 0; i < player.GetModPlayer<ModAccessorySlotPlayer>().SlotCount; i++) { if (player.armor[i].type == itemType) { value = true; break; } }
         return value;
-    }
+    } 
 
     public override void ResetEffects() {
         Hit = null;

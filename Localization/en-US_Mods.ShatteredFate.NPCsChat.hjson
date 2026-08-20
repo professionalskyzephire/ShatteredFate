@@ -1,0 +1,14 @@
+ShadyFigure: {
+	Says: {
+		0: Do you feel it, too? ... The night sounds different here.
+		1: I have what you need. And you have what I need.
+		2: I have seen a world where this thing never existed.
+		3: For some reason, it's here. That's funny.
+		4: This world… isn't the first one I've seen.
+	}
+
+	Button: {
+		0: Exchange
+		1: ""
+	}
+}

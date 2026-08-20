@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using ShatteredFate.Core;
+using ShatteredFate.Tables;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -6,84 +10,161 @@ using Terraria.ModLoader.IO;
 namespace ShatteredFate.Common.ModSystems.Worlds;
 
 public class ShadyFigureShop : ModSystem {
-    readonly int[] _allShopItems = new int[10];
-    readonly int[] _currentItems = new int[3];
+    public ShopItem[] ShopItems { get; private set; } = new ShopItem[40];
 
-    bool _isFilled = false;
-    bool _isSetup = false;
-
-    public int[] GetRegisterArray()  => _allShopItems;
-    public int GetRegisterItem(int index) => _allShopItems[index];
-    public void SetRegisterItem(int index, int item) => _allShopItems[index] = item;
-    public int[] GetCurrentShopArray() => _currentItems;
-    public int GetCurrentShopItem(int index) => _currentItems[index];
-    public void SetCurrentShopItem(int index, int item) => _currentItems[index] = item;
-
-    public bool GetFilledStatus() => _isFilled;
-    public bool SetFilledStatus(bool value) => _isFilled = value;
-    public bool GetSetupStatus() => _isSetup;
-    public void SetSetupStatus(bool value) => _isSetup = value;
+    public bool FilledStatus { get; private set; } = false;
 
     public override void LoadWorldData(TagCompound tag) {
-        int[] arr = tag.GetIntArray($"{SFMod.ModName}:ShopItems"); for (int i = 0; i < arr.Length; i++) { SetCurrentShopItem(i, arr[i]); }
-   
-        SetSetupStatus(tag.GetBool($"{SFMod.ModName}:SetupShopItem"));
+        if (tag.ContainsKey($"{SFMod.ModName}:Active Shop Items")) {
+            ShopItems = [.. tag.GetList<TagCompound>($"{SFMod.ModName}:Active Shop Items").Select(FromTag)];
+        }
+        else { ShopItems = []; }
+        FilledStatus = tag.GetBool($"{SFMod.ModName}:SetupShopItem");
     }
     public override void SaveWorldData(TagCompound tag) {
-        tag[$"{SFMod.ModName}:ShopItems"] = GetCurrentShopArray();
+        tag[$"{SFMod.ModName}:Active Shop Items"] = ShopItems.Select(ToTag).ToArray();
 
-        tag[$"{SFMod.ModName}:SetupShopItem"] = GetSetupStatus();
+        tag[$"{SFMod.ModName}:SetupShopItem"] = FilledStatus;
     }
     public override void NetSend(BinaryWriter writer) {
-        writer.Write(GetRegisterArray().Length);
-        foreach (int element in GetRegisterArray()) { writer.Write(element); }
-        writer.Write(GetCurrentShopArray().Length);
-        foreach (int element in GetCurrentShopArray()) { writer.Write(element); }
+        int[] target = new int[40];
+        int[] value = new int[40];
 
-        writer.Write(GetSetupStatus());
+        writer.Write(40);
+
+        for (int i = 0; i < 40; i++) {
+            target[i] = ShopItems[i].Target;
+            value[i] = ShopItems[i].Need;
+        }
+
+        foreach (int element in target) { writer.Write(element); }
+        foreach (int element in value) { writer.Write(element); }
+
+        writer.Write(FilledStatus);
     }
     public override void NetReceive(BinaryReader reader) {
+        int[] target = new int[40];
+        int[] value = new int[40];
         int count;
 
-        count = reader.ReadInt32(); 
-        for (int i = 0; i < count; i++) { SetRegisterItem(i, reader.ReadInt32()); }; 
-
         count = reader.ReadInt32();
-        for (int i = 0; i < count; i++) { SetCurrentShopItem(i, reader.ReadInt32()); };
-            
-        SetSetupStatus(reader.ReadBoolean());
+
+        for (int i = 0; i < count; i++) { target[i] = reader.ReadInt32(); };
+        for (int i = 0; i < count; i++) { value[i] = reader.ReadInt32(); };
+
+        for (int i = 0; i < target.Length; i++) {
+            ShopItems[i].Target = target[i];
+            ShopItems[i].Need = value[i];
+        }
+
+        FilledStatus = reader.ReadBoolean();
     }
     public override void PostUpdateWorld() {
-        if (!GetFilledStatus()) {
-            SetRegisterItem(0, 401);
-            SetRegisterItem(1, 403);
-            SetRegisterItem(2, 404);
-            for (int i = 3; i < 10; i++) { SetRegisterItem(i, i); };
-            SetFilledStatus(true);
-        };
-        if (!Main.dayTime && !GetSetupStatus()) {
-            for (int i = 0; i < 3; i++) {
-                bool alreadyThere = false;
-                int num = Main.rand.Next(0, 10);
-
-                for (int j = 0; j < i; j++) {
-                    if (GetCurrentShopItem(j) == GetRegisterItem(num) || GetCurrentShopItem(j) == 0) {
-                        alreadyThere = true;
-                        break;
-                    };
-                };
-                if (!alreadyThere) {
-                    SetCurrentShopItem(i, GetRegisterItem(num));
-                    if (GetCurrentShopItem(i) == 401 || GetCurrentShopItem(i) == 403 || GetCurrentShopItem(i) == 404) {
-                        SetCurrentShopItem(0, 401);
-                        SetCurrentShopItem(1, 403);
-                        SetCurrentShopItem(2, 404);
-                        break;
-                    };
-                };
-            };
-            SetSetupStatus(true);
-        };
-        if (Main.dayTime && GetSetupStatus()) { SetSetupStatus(false); }
+        if (Main.dayTime && FilledStatus) { FilledStatus = false; }
+        if (FilledStatus) { return; };
+        if (!FilledStatus && !Main.dayTime) { FillShop(); }
     }
+
+    static bool TryGetRandomItem(IEnumerable<ShadyFigureItem> source, HashSet<int> used, out int target) {
+        List<ShadyFigureItem> available = [];
+
+        foreach (ShadyFigureItem item in source) {
+            if (item.WorldProgress != SFWorld.WorldProgress) { continue; }
+            if (used.Contains(item.Target)) { continue; }
+            available.Add(item);
+        }
+
+        if (available.Count == 0) {
+            target = 0;
+            return false;
+        }
+
+        target = Main.rand.Next(available).Target;
+        used.Add(target);
+
+        return true;
+    }
+    void FillShop() {
+        HashSet<int> used = [];
+
+        if (ShopItems.Length < 40) { ShopItems = new ShopItem[40]; }
+
+        List<ShadyFigureItem> priceItems = [];
+        priceItems.AddRange(Items.Material);
+        priceItems.AddRange(Items.Misc);
+        priceItems.AddRange(Items.Weapon);
+
+        for (int i = 0; i < 3; i++) {
+            if (TryGetRandomItem(Items.Armor, used, out int value)) {
+                if (TryGetRandomItem(priceItems, used, out int prise)) {
+                    if (CheckArmorSet(value, out ShadyFigureItem.ArmorSet value2)) {
+                        ShopItems[0] = new(value2.Helmet, prise);
+                        TryGetRandomItem(priceItems, used, out int prise1);
+                        ShopItems[1] = new(value2.Chainmail, prise1);
+                        TryGetRandomItem(priceItems, used, out int prise2);
+                        ShopItems[2] = new(value2.Greaves, prise2);
+                        break;
+                    }
+                    ShopItems[i] = new(value, 1);
+                }
+            }
+        }
+
+        used.Clear();
+
+        priceItems.RemoveRange(Items.Material.Count + Items.Misc.Count, Items.Weapon.Count);
+        priceItems.AddRange(Items.Armor);
+
+        for (int i = 3; i < 11; i++) {
+            if (TryGetRandomItem(Items.Weapon, used, out int value) && TryGetRandomItem(priceItems, used, out int prise)) {
+                ShopItems[i] = new(value, prise);
+            }
+        }
+
+        used.Clear();
+
+        priceItems.AddRange(Items.Acc);
+        priceItems.AddRange(Items.Consumables);
+        priceItems.AddRange(Items.Material);
+        priceItems.AddRange(Items.Misc);
+        priceItems.AddRange(Items.Weapon);
+
+        List<ShadyFigureItem> randomItems = [];
+
+        randomItems.AddRange(Items.Acc);
+        randomItems.AddRange(Items.Consumables);
+        randomItems.AddRange(Items.Material);
+        randomItems.AddRange(Items.Misc);
+
+        for (int i = 11; i < 40; i++) {
+            if (TryGetRandomItem(randomItems, used, out int target) && TryGetRandomItem(priceItems, used, out int value)) {
+                ShopItems[i] = new(target, value);
+            }
+        }
+        for (int i = 0; i < 40; i++) {
+            if (ShopItems[i] == null) { ShopItems[i] = new(1, 1); }
+        }
+
+        FilledStatus = true;
+    }
+    static bool CheckArmorSet(int itemType, out ShadyFigureItem.ArmorSet set) {
+        bool check = false;
+        set = null;
+        for (int i = 0; i < Items.ArmorSet.Count; i++) {
+            if (Items.ArmorSet[i].Helmet == itemType || Items.ArmorSet[i].Chainmail == itemType || Items.ArmorSet[i].Greaves == itemType) {
+                check = true;
+                set = Items.ArmorSet[i];
+                break;
+            }
+        }
+        return check;
+    }
+
+    TagCompound ToTag(ShopItem item) {
+        return new TagCompound {
+            ["Target"] = item.Target,
+            ["Need"] = item.Need
+        };
+    }
+    ShopItem FromTag(TagCompound tag) => new(tag.GetInt("Target"), tag.GetInt("Need"));
 };

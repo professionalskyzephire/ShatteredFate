@@ -101,7 +101,7 @@ public class RagePlayer : ModPlayer {
         if (KeyBind.GetRageKey().JustPressed && GetRage() >= GetMaxRage() && GetMaxRage() > 0) { SetRageStatus(true); };
     }
     public override void PostUpdate() {
-        foreach (int accType in equipAcc.Keys) if (!PlayersExpansions.CheackAcc(Player, accType)) { return; };
+        foreach (int accType in equipAcc.Keys) if (!PlayersExpansions.CheckAcc(Player, accType)) { return; };
         if (GetDurationTime() == 0 && !GetCDStatus() && GetRageStatus()) {
             SetCDTime(15 * 60);
             SetCDStatus(true);

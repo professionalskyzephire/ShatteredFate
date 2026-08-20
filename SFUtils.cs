@@ -169,4 +169,78 @@ public static class SFUtils {
             return z1 * z2;
         }
     }
+    public static bool CheckNeedItem(Player player, int itemType, int need) {
+        if (NeedItem(player.inventory, itemType, need)) { return true; }
+        else if (NeedItem(player.bank.item, itemType, need)) { return true; }
+        else if (NeedItem(player.bank2.item, itemType, need)) { return true; }
+        else if (NeedItem(player.bank3.item, itemType, need)) { return true; }
+        else if (NeedItem(player.bank4.item, itemType, need)) { return true; }
+        else { return false; };
+    }
+    public static bool CheckNeedItem(Player player, int itemType, int need, out int container, out int stack) {
+        if (NeedItem(player.inventory, itemType, need, out stack)) { container = 0; return true; }
+        else if (NeedItem(player.bank.item, itemType, need, out stack)) { container = 1; return true; }
+        else if (NeedItem(player.bank2.item, itemType, need, out stack)) { container = 2; return true; }
+        else if (NeedItem(player.bank3.item, itemType, need, out stack)) { container = 3; return true; }
+        else if (NeedItem(player.bank4.item, itemType, need, out stack)) { container = 4; return true; }
+        else { container = -1; stack = 0; return false; };
+    }
+    public static bool NeedItem(Item[] inv, int target, int stack) {
+        bool has = false;
+        for (int i = 0; i < inv.Length; i++) {
+            if (inv[i] != null) {
+                if (inv[i].type == target && inv[i].stack > 0) {
+                    if (inv[i].stack - stack <= 0) {
+                        inv[i].stack = 0;
+                        has = true;
+                        break;
+                    };
+                    inv[i].stack -= stack;
+                    has = true;
+                    break;
+                };
+            };
+        };
+        return has;
+    }
+    public static bool NeedItem(Item[] inv, int target, int stack, out int MaxStack) {
+        bool has = false;
+        MaxStack = 0;
+        for (int i = 0; i < inv.Length; i++) {
+            if (inv[i] != null) {
+                if (inv[i].type == target && inv[i].stack > 0) {
+                    if (inv[i].stack - stack <= 0) {
+                        inv[i].stack = 1;
+                        has = true;
+                        break;
+                    };
+                    inv[i].stack -= stack;
+                    MaxStack = inv[i].stack;
+                    has = true;
+                    break;
+                };
+            };
+        };
+        return has;
+    }
+    public static bool RightClickRepeat(ref int value1, ref int value2) {
+        if (!Main.mouseLeft) {
+            value1 = 0;
+            value2 = 0;
+            return false;
+        };
+        if (Main.mouseLeftRelease) {
+            value1 = 0;
+            return true;
+        };
+
+        value1++;
+
+        if (value1 >= 15) {
+            value1 = 10;
+            return true;
+        };
+
+        return false;
+    }
 };

@@ -12,28 +12,25 @@ public class HoverBuffsPlayer : ModPlayer {
     bool _hover = false;
     internal bool _tic = false;
 
-    public int GetHoverBuff() => _buffType;
-    public void SetHoverBuff(int value) => _buffType = value;
+    public int BuffType { get => _buffType; set => _buffType = value; }
 
-    public string GetHoverBuffName() => _buffName;
-    public void SetHoverBuffName(string value) => _buffName = value is null ? "" : _buffName = value;
+    public string BuffName { get => _buffName; set => _buffName = value is null ? "" : value; }
 
-    public string[] GetHoverBuffTooltipsArray() => _buffTooltips.Split("\n");
-    public void SetHoverBuffTooltips(string value) => _buffTooltips += value;
+    public string[] GetBuffTooltips() => _buffTooltips.Split("\n");
+    public void SetBuffTooltips(string value) => _buffTooltips += value;
 
-    public bool IsHover() => _hover;
-    public void SetHover(bool value) => _hover = value;
+    public bool Hover { get => _hover; set => _hover = value; }
 
     public string[] GetAllHoverBuffText() {
-        string[] text = new string[GetHoverBuffTooltipsArray().Length + 1];
-        string[] clearTips = UIUtils.ClearText(GetHoverBuffTooltipsArray());
-        text[0] = UIUtils.ClearText([GetHoverBuffName()])[0];
+        string[] text = new string[GetBuffTooltips().Length + 1];
+        string[] clearTips = UIUtils.ClearText(GetBuffTooltips());
+        text[0] = UIUtils.ClearText([BuffName])[0];
         for (int i = 1; i < text.Length; i++) { text[i] = clearTips[i - 1]; }
         return text;
     }
 
     public override void ResetEffects() {
-        if(!IsHover()) { _buffType = -1; };
+        if(!Hover) { _buffType = -1; };
         _buffName = "";
         _buffTooltips = "";
     }

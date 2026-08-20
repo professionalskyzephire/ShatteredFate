@@ -99,7 +99,7 @@ internal class Ons {
     static void FixRageBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet, bool foodHack) {
         if (type == 115) {
             RagePlayer rPlayer = Main.LocalPlayer.GetModPlayer<RagePlayer>();
-            if (PlayersExpansions.CheackAcc(rPlayer.Player, ModContent.ItemType<AmuletofRage>())) {
+            if (PlayersExpansions.CheckAcc(rPlayer.Player, ModContent.ItemType<AmuletofRage>())) {
                 if (rPlayer.GetRageStatus() || rPlayer.GetCDTime() > 0) { return; };
                 if (rPlayer.GetVanillaRageBuffTime() == 0) { rPlayer.SetRage(rPlayer.GetRage() + 20); };
                 if (rPlayer.GetVanillaRageBuffTime() >= 0) { rPlayer.SetVanillaRageBuffTime(timeToAdd); };
@@ -109,11 +109,11 @@ internal class Ons {
     static int TicSound(On_Main.orig_DrawBuffIcon orig, int drawBuffText, int buffSlotOnPlayer, int x, int y) {
         int num = Main.LocalPlayer.buffType[buffSlotOnPlayer];
         if (new Rectangle(x, y, TextureAssets.Buff[num].Width(), TextureAssets.Buff[num].Height()).Contains(new Point(Main.mouseX, Main.mouseY))) {
-            if (num == Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>().GetHoverBuff()) { Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>().SetHover(true); };
+            if (Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>().BuffType.Equals(num)) { Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>().Hover = true; };
         }
         else {
-            if (num == Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>().GetHoverBuff()) {
-                Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>().SetHover(false);
+            if (Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>().BuffType.Equals(num)) {
+                Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>().Hover = false;
                 Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>()._tic = false;
             };
         };
@@ -126,7 +126,7 @@ internal class Ons {
         HoverBuffsPlayer hBplayer = Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>();
         int npcCount = 0;
 
-        if (!hBplayer._tic && hBplayer.IsHover()) { 
+        if (!hBplayer._tic && hBplayer.Hover) { 
             SoundEngine.PlaySound(SoundID.MenuTick);
             hBplayer._tic = true;
         };
@@ -150,8 +150,8 @@ internal class Ons {
             scaleX = (int)FontAssets.MouseText.Value.MeasureString(hBplayer.GetAllHoverBuffText()[i]).X;
             maxScaleX = scaleX > maxScaleX ? scaleX : maxScaleX;
         };
-        if (!Tables.Buffs.SF.ToList().Contains(hBplayer.GetHoverBuff())) {
-            if (Main.debuff[hBplayer.GetHoverBuff()] && hBplayer.GetHoverBuff() != 146 && hBplayer.GetHoverBuff() != 147) { windowColor = [new(114, 16, 16), new(85, 14, 14), new(92, 15, 15), new(114, 16, 16), new(114, 16, 16), new(132, 20, 20)]; frame = [4, 5]; }
+        if (!Tables.Buffs.SF.ToList().Contains(hBplayer.BuffType)) {
+            if (Main.debuff[hBplayer.BuffType] && hBplayer.BuffType != 146 && hBplayer.BuffType != 147) { windowColor = [new(114, 16, 16), new(85, 14, 14), new(92, 15, 15), new(114, 16, 16), new(114, 16, 16), new(132, 20, 20)]; frame = [4, 5]; }
             else { windowColor = [new(14, 33, 70), new(17, 41, 88), new(21, 48, 101), new(26, 54, 110), new(28, 59, 119), new(33, 69, 141)]; frame = [2, 3];};
         } else { windowColor = [new(0, 0, 0), new(44, 44, 44), new(65, 65, 65), new(89, 89, 89), new(111, 111, 111), new(159, 159, 159)]; frame = [0, 1]; };
 
@@ -190,7 +190,7 @@ internal class Ons {
         On_WorldGen.UpdateWorld -= NewStars;
         On_Projectile.AI_148_StarSpawner -= NewStarAI;
         On_Player.AddBuff -= FixRageBuff;
-        On_Main.DrawBuffIcon += TicSound;
+        On_Main.DrawBuffIcon -= TicSound;
         On_Main.MouseText_DrawBuffTooltip -= DrawBgForBuffs;
     }
 };

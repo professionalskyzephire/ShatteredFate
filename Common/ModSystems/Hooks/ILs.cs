@@ -23,12 +23,12 @@ internal class ILs {
         c.EmitDelegate<Action<object>>((info) => {
             Player player = Main.LocalPlayer;
             HoverBuffsPlayer hBPlayer = player.GetModPlayer<HoverBuffsPlayer>();
-            if (hBPlayer.GetHoverBuffName() != "") { return; };
-            hBPlayer.SetHoverBuffName((string)info.GetType().GetField("cursorText", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(info));
-            hBPlayer.SetHoverBuffTooltips((string)info.GetType().GetField("buffTooltip", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(info));
+            if (hBPlayer.BuffName != "") { return; };
+            hBPlayer.BuffName = (string)info.GetType().GetField("cursorText", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(info);
+            hBPlayer.SetBuffTooltips((string)info.GetType().GetField("buffTooltip", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(info));
             for (int i = 0; i < player.buffType.Length; i++) {
-                if (hBPlayer.GetHoverBuffName() == Lang.GetBuffName(player.buffType[i])) {
-                    hBPlayer.SetHoverBuff(player.buffType[i]);
+                if (hBPlayer.BuffName.Equals(Lang.GetBuffName(player.buffType[i]))) {
+                    hBPlayer.BuffType = player.buffType[i];
                     break;
                 };
             };

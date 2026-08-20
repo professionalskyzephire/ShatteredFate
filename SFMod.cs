@@ -1,9 +1,12 @@
 ﻿using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace ShatteredFate;
 
 public class SFMod : Mod {
     SFMod() => _instance = this;
+
+    public UserInterface SFUI { get; private set; }
 
     public const string VanillaTexture = "Terraria/Images/";
     public const string ExtrasPath = "ShatteredFate/Extras/";
@@ -23,7 +26,10 @@ public class SFMod : Mod {
         }
     }
 
-    public override void Load() => Loader.Load(this);
+    public override void Load() {
+        Loader.Load(this);
+        SFUI = new UserInterface();
+    }
 
     public override void Unload() {
         _musicMod = null;
