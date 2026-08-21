@@ -60,6 +60,7 @@ public class ShadyFigureShop : ModSystem {
         FilledStatus = reader.ReadBoolean();
     }
     public override void PostUpdateWorld() {
+        //Main.NewText(SFWorld.WorldProgress);
         if (Main.dayTime && FilledStatus) { FilledStatus = false; }
         if (FilledStatus) { return; };
         if (!FilledStatus && !Main.dayTime) { FillShop(); }
@@ -69,7 +70,7 @@ public class ShadyFigureShop : ModSystem {
         List<ShadyFigureItem> available = [];
 
         foreach (ShadyFigureItem item in source) {
-            if (item.WorldProgress != SFWorld.WorldProgress) { continue; }
+            if (item.WorldProgress > SFWorld.WorldProgress) { continue; }
             if (used.Contains(item.Target)) { continue; }
             available.Add(item);
         }
@@ -98,7 +99,7 @@ public class ShadyFigureShop : ModSystem {
             if (TryGetRandomItem(Items.Armor, used, out int value)) {
                 if (TryGetRandomItem(priceItems, used, out int prise)) {
                     if (CheckArmorSet(value, out ShadyFigureItem.ArmorSet value2)) {
-                        ShopItems[0] = new(value2.Helmet, prise);
+                        ShopItems[0] = new(Main.rand.Next(value2.Helmet), prise);
                         TryGetRandomItem(priceItems, used, out int prise1);
                         ShopItems[1] = new(value2.Chainmail, prise1);
                         TryGetRandomItem(priceItems, used, out int prise2);
@@ -110,8 +111,6 @@ public class ShadyFigureShop : ModSystem {
             }
         }
 
-        used.Clear();
-
         priceItems.RemoveRange(Items.Material.Count + Items.Misc.Count, Items.Weapon.Count);
         priceItems.AddRange(Items.Armor);
 
@@ -120,8 +119,6 @@ public class ShadyFigureShop : ModSystem {
                 ShopItems[i] = new(value, prise);
             }
         }
-
-        used.Clear();
 
         priceItems.AddRange(Items.Acc);
         priceItems.AddRange(Items.Consumables);
@@ -151,7 +148,7 @@ public class ShadyFigureShop : ModSystem {
         bool check = false;
         set = null;
         for (int i = 0; i < Items.ArmorSet.Count; i++) {
-            if (Items.ArmorSet[i].Helmet == itemType || Items.ArmorSet[i].Chainmail == itemType || Items.ArmorSet[i].Greaves == itemType) {
+            if (Items.ArmorSet[i].Helmet.Contains(itemType) || Items.ArmorSet[i].Chainmail == itemType || Items.ArmorSet[i].Greaves == itemType) {
                 check = true;
                 set = Items.ArmorSet[i];
                 break;

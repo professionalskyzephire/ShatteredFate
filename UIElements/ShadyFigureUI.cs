@@ -23,10 +23,10 @@ public class ShadyFigureUI : UIState {
         }
     }
     public override void Draw(SpriteBatch spriteBatch) {
-        int xScale = 0;
-        int yScale = 0;
+        float xScale = 0;
+        float yScale = 0;
         float x = (Main.screenWidth / 2) - 920; // 868
-        float y = (Main.screenHeight / 2) - 254;
+        float y = (Main.screenHeight / 2) - 258;
 
         int index = 0;
 
@@ -34,15 +34,15 @@ public class ShadyFigureUI : UIState {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
-                _slots[i * 10 + j].Draw(spriteBatch, new(x + xScale, y + yScale), 0.65f, 0.75f);
+                _slots[i * 10 + j].Draw(spriteBatch, new(x + xScale, y + yScale), 0.75f, 0.88f);
                 if (!hovered) {
                     hovered = _slots[i * 10 + j].Hover(new(x + xScale, y + yScale), Main.LocalPlayer);
                 }
-                xScale += 40;
+                xScale += 42.5f;
                 index++;
             }
             xScale = 0;
-            yScale += 40;
+            yScale += 42.5f;
         }
         if (hovered) { Main.instance.MouseText(Main.hoverItemName); }
     }

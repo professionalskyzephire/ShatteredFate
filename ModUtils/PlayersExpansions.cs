@@ -11,7 +11,7 @@ public class PlayersExpansions : ModPlayer {
         _getModedAccSlot = typeof(ModAccessorySlotPlayer).GetField("exAccessorySlot", BindingFlags.NonPublic | BindingFlags.Instance);
     }
 
-    readonly NPC[] _nearbayNPC = new NPC[255];
+    readonly NPC[] _nearbayNPC = new NPC[200];
 
     public delegate void HitDelegate(Item item, ref StatModifier damage); public HitDelegate Hit;
     public delegate void EnterWorldDelegate(); public EnterWorldDelegate EnterWorld;
@@ -20,22 +20,23 @@ public class PlayersExpansions : ModPlayer {
 
     public NPC[] GetNearbyNPC() {
         int count = 0;
-        for (int i = 0; i < 255; i++) { if (_nearbayNPC[i] != null) { count++; }; };
+        for (int i = 0; i <  Main.maxNPCs; i++) { 
+            if (Main.npc[i] != null) {
+                if (new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight).Intersects(Main.npc[i].Hitbox) && Main.npc[i].active) {
+                    _nearbayNPC[count] = Main.npc[i];
+                    count++;
+                };
+            }; 
+        }
         NPC[] npcs = new NPC[count];
         for (int i = 0; i < count; i++) { npcs[i] = _nearbayNPC[i]; };
         return npcs;
     }
-    public void SetNearbyNPC(int index, NPC npcType) => _nearbayNPC[index] = npcType;
     public void ClearNearbyNPCArray() {
-        for (int i = 0; i < 255; i++) { SetNearbyNPC(i, null); };
+        for (int i = 0; i < 200; i++) { _nearbayNPC[i] = null; };
     }
 
     public override void PostUpdate() {
-        int index = 0;
-        foreach (NPC npc in Main.ActiveNPCs) {
-            if (!npc.townNPC) { continue; };
-            if (new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight).Intersects(npc.Hitbox) && npc.active) { SetNearbyNPC(index, npc); index++; };
-        };
     }
 
     public static FieldInfo GetModedAccSlot() => _getModedAccSlot;

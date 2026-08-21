@@ -4,7 +4,6 @@ using ShatteredFate.Common.Players;
 using ShatteredFate.Content.Items.Accessories;
 using ShatteredFate.ModUtils;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -60,16 +59,16 @@ public class RageItem : GlobalItem {
             tooltips.Add(new(Mod, $"{SFMod.ModName}:RAbility", string.Format(Loc.GetTips("GlobalItems.RageItem.RAbility"), UIUtils.GetButtonName(KeyBind.GetRageKey()))) { OverrideColor = cColor.GetAnimatedItemColor() });
         };
     }
-    public override void PostDrawTooltip(Item item, ReadOnlyCollection<DrawableTooltipLine> lines) {
+    public override void PostDrawTooltip(Item item, System.Collections.ObjectModel.ReadOnlyCollection<DrawableTooltipLine> lines) {
         SpriteBatch sB = Main.spriteBatch;
         foreach (DrawableTooltipLine line in lines) {
             if (line.Name == $"{SFMod.ModName}:RAbility") {
                 RagePlayer rPlayer = Main.LocalPlayer.GetModPlayer<RagePlayer>();
                 int barWidth = 0;
 
-                if (rPlayer.GetRage() <= rPlayer.GetMaxRage()) { barWidth = (int)(FontAssets.MouseText.Value.MeasureString(line.Text).X * ModUtils.UIUtils.GetProgress(rPlayer.GetRage(), rPlayer.GetMaxRage(), true)); };
+                if (rPlayer.GetRage() <= rPlayer.GetMaxRage()) { barWidth = (int)(FontAssets.MouseText.Value.MeasureString(line.Text).X * UIUtils.GetProgress(rPlayer.GetRage(), rPlayer.GetMaxRage(), true)); };
                 if (rPlayer.GetDurationTime() <= (10 * 60) && rPlayer.GetRageStatus()) { barWidth = 0; };
-                if (rPlayer.GetCDTime() <= (15 * 60) && rPlayer.GetCDStatus()) { barWidth = (int)(FontAssets.MouseText.Value.MeasureString(line.Text).X * ModUtils.UIUtils.GetProgress(rPlayer.GetCDTime(), 15 * 60, true)); };
+                if (rPlayer.GetCDTime() <= (15 * 60) && rPlayer.GetCDStatus()) { barWidth = (int)(FontAssets.MouseText.Value.MeasureString(line.Text).X * UIUtils.GetProgress(rPlayer.GetCDTime(), 15 * 60, true)); };
 
                 sB.Draw(TextureAssets.MagicPixel.Value, new Rectangle(line.X, line.Y + 9, barWidth, 4), Color.Black);
                 return;

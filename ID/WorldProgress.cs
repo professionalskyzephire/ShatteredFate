@@ -10,7 +10,9 @@ public static class WorldProgress {
     public const int Deerclops = 6;
     public const int WallOfFlesh = 7;
     public const int QueenSlime = 8;
-    public const int MechBoss = 9;
+    public const int MechBoss1 = 9;
+    public const int MechBoss2 = 9;
+    public const int MechBoss3 = 9;
     public const int Plantera = 12;
     public const int Golem = 13;
     public const int EmpressOfLight = 14;

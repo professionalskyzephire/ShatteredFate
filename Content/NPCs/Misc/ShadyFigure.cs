@@ -38,12 +38,6 @@ public class ShadyFigure : ModNPC {
         }
     }
     public override string GetChat() => Loc.GetNPCChat("ShadyFigure.Says." + Main.rand.Next(0, 5));
-    public override void ModifyActiveShop(string shopName, Item[] items) {
-        //int[] cItems = ModContent.GetInstance<ShadyFigureShop>().GetCurrentShopArray();
-        //for (int i = 0; i < cItems.Length; i++) {
-        //    items[i] = new(cItems[i]);
-        //}
-    }
     public override void SetChatButtons(ref string button, ref string button2) {
         button = Loc.GetNPCChat("ShadyFigure.Button.0");
     }

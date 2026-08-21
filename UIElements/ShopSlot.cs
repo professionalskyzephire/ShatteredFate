@@ -67,6 +67,13 @@ public class ShopSlot(Texture2D itemSlotTexture) {
     public void Draw(SpriteBatch sB, Vector2 pos, float slotScale = 1f, float itemScale = 1f) {
         sB.Draw(_slotTexture, pos, null, Color.White, 0f, _slotTexture.Size() / 2f, slotScale, SpriteEffects.None, 1);
         Main.GetItemDrawFrame(ItemInSlot.Target, out Texture2D texture, out Rectangle itemFrame);
-        sB.Draw(texture, pos, itemFrame, Color.White, 0f, itemFrame.Size() / 2f, itemScale, SpriteEffects.None, 1);
+
+        Color color;
+        float scale2 = 0;
+        if (new Item(ItemInSlot.Target).color.A != 0 && ItemInSlot.Target != 22) { color = new Item(ItemInSlot.Target).color; }
+        else { color = Color.White; }
+        if (itemFrame.Width >= 26) { scale2 = 0.2f; };
+        if (itemFrame.Width >= 46) { scale2 = 0.35f; }
+        sB.Draw(texture, pos, itemFrame, color, 0f, itemFrame.Size() / 2f, itemScale - scale2, SpriteEffects.None, 1);
     }
 };

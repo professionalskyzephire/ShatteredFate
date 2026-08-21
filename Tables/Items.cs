@@ -1,5 +1,7 @@
 ﻿using ShatteredFate.Core;
 using System.Collections.Generic;
+using System.Linq;
+using Terraria.Utilities;
 using static ShatteredFate.ID.WorldProgress;
 
 namespace ShatteredFate.Tables;
@@ -13,7 +15,6 @@ public static class Items {
     public static List<ShadyFigureItem> Misc { get; private set; } = [];
     public static List<ShadyFigureItem.ArmorSet> ArmorSet { get; private set; } = [];
 
-
     public static void Load() {
         RegisterWeapon(1, PreBoss);
         RegisterWeapon(4, PreBoss);
@@ -23,17 +24,17 @@ public static class Items {
         RegisterMisc(8, PreBoss);
         RegisterMisc(9, PreBoss);
         RegisterWeapon(10, PreBoss);
-        for (int i = 11; i < 15; i++) { RegisterMaterial(i, PreBoss); }
-        for (int i = 15; i < 19; i++) { RegisterAcc(i, PreBoss); }
-        for (int i = 19; i < 24; i++) { RegisterMaterial(i, PreBoss); }
+        for (byte i = 11; i < 15; i++) { RegisterMaterial(i, PreBoss); };
+        for (byte i = 15; i < 19; i++) { RegisterAcc(i, PreBoss); };
+        for (byte i = 19; i < 24; i++) { RegisterMaterial(i, PreBoss); };
         RegisterWeapon(24, PreBoss);
         RegisterConsumables(28, PreBoss);
         RegisterMisc(29, PreBoss);
         RegisterMisc(31, PreBoss);
         RegisterMaterial(38, PreBoss);
-        for (int i = 39; i < 43; i++) { RegisterWeapon(i, PreBoss); }
+        for (byte i = 39; i < 43; i++) { RegisterWeapon(i, PreBoss); };
         RegisterMisc(43, PreBoss);
-        for (int i = 44; i < 48; i++) { RegisterWeapon(i, PreBoss); }
+        for (byte i = 44; i < 48; i++) { RegisterWeapon(i, PreBoss); };
         RegisterAcc(49, PreBoss);
         RegisterMisc(50, PreBoss);
         RegisterWeapon(51, PreBoss);
@@ -51,31 +52,101 @@ public static class Items {
         RegisterMaterial(75, PreBoss);
         RegisterMisc(84, PreBoss);
         RegisterMaterial(85, PreBoss);
-        RegisterMaterial(86, PreBoss);
+        RegisterMaterial(86, EvilBoss);
         RegisterArmor(88, PreBoss);
-        for (int i = 95; i < 100; i++) { RegisterWeapon(i, PreBoss); }
-        for (int i = 103; i < 105; i++) { RegisterWeapon(i, EvilBoss); }
-        for (int i = 109; i < 111; i++) { RegisterWeapon(i, PreBoss); }
+        for (byte i = 95; i < 100; i++) { RegisterWeapon(i, PreBoss); };
+        for (byte i = 103; i < 105; i++) { RegisterWeapon(i, EvilBoss); };
+        for (byte i = 109; i < 111; i++) { RegisterMisc(i, PreBoss); };
         RegisterAcc(111, PreBoss);
         RegisterWeapon(112, Skeletron);
         RegisterWeapon(113, Skeletron);
         RegisterMisc(115, PreBoss);
-        for (int i = 119; i < 123; i++) { RegisterWeapon(i, EvilBoss); }
+        for (byte i = 119; i < 123; i++) { RegisterWeapon(i, EvilBoss); };
         RegisterWeapon(127, EvilBoss);
         RegisterAcc(128, PreBoss);
         RegisterMisc(148, Skeletron);
+        RegisterMisc(149, Skeletron);
+        RegisterMaterial(154, Skeletron);
+        RegisterWeapon(155, Skeletron);
+        RegisterAcc(156, Skeletron);
+        RegisterWeapon(157, Skeletron);
+        RegisterAcc(158, PreBoss);
+        RegisterAcc(159, PreBoss);
+        for (byte i = 160; i < 163; i++) { RegisterWeapon(i, PreBoss); };
+        for (byte i = 163; i < 166; i++) { RegisterWeapon(i, Skeletron); };
+        for (byte i = 166; i < 169; i++) { RegisterWeapon(i, PreBoss); };
+        for (byte i = 173; i < 176; i++) { RegisterMaterial(i, EvilBoss); };
+        for (byte i = 177; i < 183; i++) { RegisterMaterial(i, PreBoss); };
+        RegisterMisc(185, PreBoss);
+        RegisterAcc(187, PreBoss);
+        RegisterConsumables(188, PreBoss);
+        RegisterConsumables(189, PreBoss);
+        RegisterWeapon(190, PreBoss);
+        RegisterWeapon(191, PreBoss);
+        RegisterAcc(193, Skeletron);
+        for (byte i = 197; i < 205; i++) { RegisterWeapon(i, EvilBoss); };
+        RegisterAcc(208, PreBoss);
+        RegisterMaterial(209, PreBoss);
+        RegisterMaterial(210, PreBoss);
+        RegisterWeapon(211, PreBoss);
+        RegisterAcc(215, PreBoss);
+        RegisterWeapon(217, EvilBoss);
+        for (byte i = 218; i < 221; i++) { RegisterWeapon(i, Skeletron); };
+        RegisterMaterial(223, PreBoss);
+        RegisterMaterial(225, PreBoss);
+        RegisterConsumables(227, PreBoss);
+        RegisterMisc(234, EvilBoss);
+        RegisterMisc(235, PreBoss);
+        RegisterMaterial(236, PreBoss);
+        RegisterArmor(238, PreBoss);
+        RegisterMisc(265, EvilBoss);
+        RegisterWeapon(266, PreBoss);
+        RegisterAcc(267, PreBoss);
+        RegisterArmor(268, PreBoss);
+        for (int i = 272; i < 275; i++) { RegisterWeapon(i, Skeletron); };
+        RegisterWeapon(277, PreBoss);
+        RegisterMisc(278, PreBoss);
+        for (int i = 279; i < 282; i++) { RegisterWeapon(i, PreBoss); };
+        RegisterWeapon(284, PreBoss);
+        RegisterAcc(285, PreBoss);
+        RegisterWeapon(287, PreBoss);
+        for (int i = 288; i < 306; i++) { RegisterConsumables(i, PreBoss); };
+        for (int i = 313; i < 321; i++) { RegisterMaterial(i, PreBoss); };
+        for (int i = 323; i < 325; i++) { RegisterMaterial(i, PreBoss); };
+        RegisterMisc(327, Skeletron);
+        RegisterMisc(329, Skeletron);
+        RegisterMaterial(331, PreBoss);
+        for (int i = 364; i < 367; i++) { RegisterMaterial(i, WallOfFlesh); };
+        for (int i = 381; i < 383; i++) { RegisterMaterial(i, WallOfFlesh); };
+        for (int i = 383; i < 391; i++) { RegisterWeapon(i, WallOfFlesh); };
+        RegisterMaterial(391, WallOfFlesh);
+        for (int i = 393; i < 396; i++) { RegisterAcc(i, PreBoss); }
+        for (int i = 396; i < 398; i++) { RegisterAcc(i, EvilBoss); }
+        RegisterAcc(399, PreBoss);
+        RegisterAcc(405, PreBoss);
+        RegisterWeapon(406, WallOfFlesh);
+        RegisterMisc(425, MechBoss1);
+        RegisterWeapon(426, WallOfFlesh);
 
-        RegisterArmorSet(new(89, 80, 76, PreBoss));
-        RegisterArmorSet(new(90, 81, 77, PreBoss));
-        RegisterArmorSet(new(91, 82, 78, PreBoss));
-        RegisterArmorSet(new(92, 83, 79, PreBoss));
-        RegisterArmorSet(new(102, 101, 100, EvilBoss));
+        RegisterArmorSet(new([89], 80, 76, PreBoss));
+        RegisterArmorSet(new([90], 81, 77, PreBoss));
+        RegisterArmorSet(new([91], 82, 78, PreBoss));
+        RegisterArmorSet(new([92], 83, 79, PreBoss));
+        RegisterArmorSet(new([102], 101, 100, EvilBoss));
+        RegisterArmorSet(new([123], 124, 125, EvilBoss));
+        RegisterArmorSet(new([151], 152, 153, Skeletron));
+        RegisterArmorSet(new([228], 229, 230, PreBoss));
+        RegisterArmorSet(new([231], 232, 233, EvilBoss));
+        RegisterArmorSet(new([256], 257, 258, KingSlime));
+        RegisterArmorSet(new([371, 372, 373], 374, 375, WallOfFlesh));
+        RegisterArmorSet(new([376, 377, 378], 379, 380, WallOfFlesh));
+        RegisterArmorSet(new([400, 401, 402], 403, 404, WallOfFlesh));
     }
 
     public static void RegisterWeapon(int target, int progress) => Weapon.Add(new(target, progress, ShadyFigureItem.ItemType.Weapon));
     public static void RegisterArmor(int target, int progress) => Armor.Add(new(target, progress, ShadyFigureItem.ItemType.Armor));
     public static void RegisterArmorSet(ShadyFigureItem.ArmorSet set) {
-        Armor.Add(new(set.Helmet, set.Progress, ShadyFigureItem.ItemType.Armor));
+        Armor.AddRange(set.Helmet.Select(i => new ShadyFigureItem(i, set.Progress, ShadyFigureItem.ItemType.Armor)));
         Armor.Add(new(set.Chainmail, set.Progress, ShadyFigureItem.ItemType.Armor));
         Armor.Add(new(set.Greaves, set.Progress, ShadyFigureItem.ItemType.Armor));
         ArmorSet.Add(set);

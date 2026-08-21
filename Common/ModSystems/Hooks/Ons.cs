@@ -140,7 +140,7 @@ internal class Ons {
         int scaleX = 0;
         int maxScaleX = 0;
         int scaleY = (int)FontAssets.MouseText.Value.MeasureString("J").Y;
-        int maxScaleY = scaleY * hBplayer.GetAllHoverBuffText().Length + 23 * npcCount;
+        int maxScaleY = (scaleY * hBplayer.GetAllHoverBuffText().Length) + 23 * npcCount - (npcCount > 3 ? (int)(2 * npcCount + 0.4 * npcCount) : 0);
 
         SpriteBatch sB = Main.spriteBatch;
         Texture2D[] asset = Resources.Textures.GetWindowBG();
@@ -151,9 +151,9 @@ internal class Ons {
             maxScaleX = scaleX > maxScaleX ? scaleX : maxScaleX;
         };
         if (!Tables.Buffs.SF.ToList().Contains(hBplayer.BuffType)) {
-            if (Main.debuff[hBplayer.BuffType] && hBplayer.BuffType != 146 && hBplayer.BuffType != 147) { windowColor = [new(114, 16, 16), new(85, 14, 14), new(92, 15, 15), new(114, 16, 16), new(114, 16, 16), new(132, 20, 20)]; frame = [4, 5]; }
-            else { windowColor = [new(14, 33, 70), new(17, 41, 88), new(21, 48, 101), new(26, 54, 110), new(28, 59, 119), new(33, 69, 141)]; frame = [2, 3];};
-        } else { windowColor = [new(0, 0, 0), new(44, 44, 44), new(65, 65, 65), new(89, 89, 89), new(111, 111, 111), new(159, 159, 159)]; frame = [0, 1]; };
+            if (Main.debuff[hBplayer.BuffType] && hBplayer.BuffType != 146 && hBplayer.BuffType != 147) { windowColor = [new(79, 14, 14), new(84, 14, 14, 170), new(92, 15, 15), new(114, 16, 16), new(114, 16, 16), new(132, 20, 20), new(84, 14, 14)]; frame = [4, 5]; }
+            else { windowColor = [new(14, 33, 70), new(17, 41, 88, 170), new(21, 48, 101), new(26, 54, 110), new(28, 59, 119), new(33, 69, 141), new(17, 41, 88)]; frame = [2, 3];};
+        } else { windowColor = [new(0, 0, 0), new(44, 44, 44, 170), new(65, 65, 65), new(89, 89, 89), new(111, 111, 111), new(159, 159, 159), new(44, 44, 44)]; frame = [0, 1]; };
 
         Rectangle window = new(X - 10, Y - 6, maxScaleX + 20, maxScaleY + 6);
         if (window.Right > Main.screenWidth) { X -= window.Right - Main.screenWidth + 16; };
@@ -166,11 +166,11 @@ internal class Ons {
         sB.Draw(asset[1], new Rectangle((int)pos.X, (int)pos.Y - 2, maxScaleX + 12, maxScaleY - 2), null, windowColor[1], 0f, Vector2.Zero, SpriteEffects.None, 1f);
         sB.Draw(asset[1], new Rectangle((int)pos.X + 4, (int)pos.Y - 6, maxScaleX + 6, 2), null, windowColor[3], 0f, Vector2.Zero, SpriteEffects.None, 1f);
         sB.Draw(asset[1], new Rectangle((int)pos.X + 4, (int)pos.Y - 4, maxScaleX + 4, 2), null, windowColor[5], 0f, Vector2.Zero, SpriteEffects.None, 1f);
-        sB.Draw(asset[1], new Rectangle((int)pos.X - 4, (int)pos.Y + 2, 2, (maxScaleY / 2)), null, windowColor[1], 0f, Vector2.Zero, SpriteEffects.None, 1f);
+        sB.Draw(asset[1], new Rectangle((int)pos.X - 4, (int)pos.Y + 2, 2, (maxScaleY / 2)), null, windowColor[0], 0f, Vector2.Zero, SpriteEffects.None, 1f);
         sB.Draw(asset[1], new Rectangle((int)pos.X - 4, (int)pos.Y + (maxScaleY / 2), 2, (maxScaleY / 2) - 6), null, windowColor[0], 0f, Vector2.Zero, SpriteEffects.None, 1f);
         sB.Draw(asset[1], new Rectangle((int)pos.X - 2, (int)pos.Y + 2, 2, (maxScaleY / 2)), null, windowColor[4], 0f, Vector2.Zero, SpriteEffects.None, 1f);
         sB.Draw(asset[1], new Rectangle((int)pos.X - 2, (int)pos.Y + (maxScaleY / 2), 2, (maxScaleY / 2) - 6), null, windowColor[3], 0f, Vector2.Zero, SpriteEffects.None, 1f);
-        sB.Draw(asset[1], new Rectangle((int)pos.X + maxScaleX + 14, (int)pos.Y + 2, 2, (maxScaleY / 2)), null, windowColor[1], 0f, Vector2.Zero, SpriteEffects.None, 1f);
+        sB.Draw(asset[1], new Rectangle((int)pos.X + maxScaleX + 14, (int)pos.Y + 2, 2, (maxScaleY / 2)), null, windowColor[6], 0f, Vector2.Zero, SpriteEffects.None, 1f);
         sB.Draw(asset[1], new Rectangle((int)pos.X + maxScaleX + 14, (int)pos.Y + (maxScaleY / 2), 2, (maxScaleY / 2) - 6), null, windowColor[0], 0f, Vector2.Zero, SpriteEffects.None, 1f);
         sB.Draw(asset[1], new Rectangle((int)pos.X + maxScaleX + 12, (int)pos.Y + 2, 2, (maxScaleY / 2)), null, windowColor[4], 0f, Vector2.Zero, SpriteEffects.None, 1f);
         sB.Draw(asset[1], new Rectangle((int)pos.X + maxScaleX + 12, (int)pos.Y + (maxScaleY / 2), 2, (maxScaleY / 2) - 6), null, windowColor[3], 0f, Vector2.Zero, SpriteEffects.None, 1f);
