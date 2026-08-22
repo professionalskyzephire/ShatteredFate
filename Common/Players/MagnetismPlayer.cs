@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using ShatteredFate.Common.ModSystems.Worlds;
 using ShatteredFate.Content.Buffs;
-using ShatteredFate.UIElements;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 

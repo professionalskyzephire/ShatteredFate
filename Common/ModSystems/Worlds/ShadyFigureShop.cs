@@ -158,10 +158,18 @@ public class ShadyFigureShop : ModSystem {
     }
 
     TagCompound ToTag(ShopItem item) {
-        return new TagCompound {
-            ["Target"] = item.Target,
-            ["Need"] = item.Need
-        };
+        if (item == null) {
+            return new TagCompound {
+                ["Target"] = 0,
+                ["Need"] = 0
+            };
+        }
+        else {
+            return new TagCompound {
+                ["Target"] = item.Target,
+                ["Need"] = item.Need
+            };
+        }
     }
     ShopItem FromTag(TagCompound tag) => new(tag.GetInt("Target"), tag.GetInt("Need"));
 };

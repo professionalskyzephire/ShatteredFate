@@ -127,6 +127,21 @@ public static class Items {
         RegisterWeapon(406, WallOfFlesh);
         RegisterMisc(425, MechBoss1);
         RegisterWeapon(426, WallOfFlesh);
+        for (int i = 434; i < 437; i++) { RegisterWeapon(i, WallOfFlesh); };
+        RegisterMisc(437, WallOfFlesh);
+        for (int i = 481; i < 485; i++) { RegisterWeapon(i, WallOfFlesh); };
+        RegisterAcc(485, WallOfFlesh);
+        for (int i = 489; i < 494; i++) { RegisterAcc(i, WallOfFlesh); };
+        for (int i = 494; i < 496; i++) { RegisterWeapon(i, MechBoss1); };
+        for (int i = 499; i < 501; i++) { RegisterConsumables(i, WallOfFlesh); };
+        for (int i = 501; i < 503; i++) { RegisterMaterial(i, WallOfFlesh); };
+        RegisterWeapon(506, MechBoss3);
+        RegisterWeapon(514, WallOfFlesh);
+        for (int i = 515; i < 517; i++) { RegisterMisc(i, WallOfFlesh); };
+        for (int i = 517; i < 520; i++) { RegisterWeapon(i, WallOfFlesh); };
+        for (int i = 520; i < 523; i++) { RegisterMaterial(i, WallOfFlesh); };
+        for (int i = 526; i < 529; i++) { RegisterMaterial(i, WallOfFlesh); };
+
 
         RegisterArmorSet(new([89], 80, 76, PreBoss));
         RegisterArmorSet(new([90], 81, 77, PreBoss));
