@@ -1,4 +1,5 @@
 ﻿using ShatteredFate.ModUtils;
+using System.Linq;
 using Terraria.ModLoader;
 
 namespace ShatteredFate.Common.Players;
@@ -17,13 +18,24 @@ public class HoverBuffsPlayer : ModPlayer {
     public string BuffName { get => _buffName; set => _buffName = value is null ? "" : value; }
 
     public string[] GetBuffTooltips() => _buffTooltips.Split("\n");
-    public void SetBuffTooltips(string value) => _buffTooltips += value;
+    public void SetBuffTooltips(string value) {
+        if (!_buffTooltips.Contains(value)) { _buffTooltips += value; }
+    }
 
     public bool Hover { get => _hover; set => _hover = value; }
 
     public string[] GetAllHoverBuffText() {
-        string[] text = new string[GetBuffTooltips().Length + 1];
+        int count = -1;
+        for (int i = 0; i < GetBuffTooltips().Length; i++) {
+            if (GetBuffTooltips()[i] != "") { count++; }
+        }
+        if (count == -1) {
+            if (BuffName == "") { return null; }
+            else { return UIUtils.ClearText([BuffName]); }
+        }
+        string[] text = new string[GetBuffTooltips().Length + (BuffName == "" ? 0 : 1)];
         string[] clearTips = UIUtils.ClearText(GetBuffTooltips());
+        if (BuffName == "") { return clearTips; }
         text[0] = UIUtils.ClearText([BuffName])[0];
         for (int i = 1; i < text.Length; i++) { text[i] = clearTips[i - 1]; }
         return text;

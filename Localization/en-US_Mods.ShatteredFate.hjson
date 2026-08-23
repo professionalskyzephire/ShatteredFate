@@ -97,17 +97,17 @@ Buffs: {
 
 	DarkerThanCoal: {
 		DisplayName: Darker Than Coal
-		Description: Mods.ShatteredFate.Buffs.DarkerThanCoal.Description
+		Description: ""
 	}
 
 	SanguineLeechDebuff: {
 		DisplayName: Sanguine Leech Debuff
-		Description: Mods.ShatteredFate.Buffs.SanguineLeechDebuff.Description
+		Description: ""
 	}
 
 	AntiqueDaggerDoT: {
 		DisplayName: Antique Dagger Do T
-		Description: Mods.ShatteredFate.Buffs.AntiqueDaggerDoT.Description
+		Description: ""
 	}
 
 	Rage: {

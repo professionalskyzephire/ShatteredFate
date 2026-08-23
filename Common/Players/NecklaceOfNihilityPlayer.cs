@@ -11,7 +11,7 @@ public class NecklaceOfNihilityPlayer : ModPlayer {
 
     public bool EquipNecklace() => _necklaceOfNihility != null;
     public void SetNecklace(Item value) => _necklaceOfNihility = value;
-    public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath) {
+    public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)/* tModPorter Suggestion: Return an Item array to add to the players starting items. Use ModifyStartingInventory for modifying them if needed */ {
         if (!mediumCoreDeath) {
             if (Player.name.Equals("skyzephire")) { yield return new Item(ModContent.ItemType<NecklaceOfNihility>(), 1, 0); };
         };

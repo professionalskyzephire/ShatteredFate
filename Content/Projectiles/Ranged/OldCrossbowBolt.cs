@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -53,7 +54,7 @@ namespace ShatteredFate.Content.Projectiles.Ranged
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, texture.Height / Main.projFrames[Projectile.type] * Projectile.frame, texture.Width, texture.Height / Main.projFrames[Projectile.type]), lightColor, Projectile.rotation, new Vector2(texture.Width - 7, texture.Height * 0.5f), Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
         }
-        public override bool? CanDamage() => Projectile.ai[1] <= 0f ? null : false;
+        public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */ => Projectile.ai[1] <= 0f ? null : false;
         public override bool ShouldUpdatePosition() => !Collision.SolidCollision(Projectile.position - Projectile.velocity, Projectile.width, Projectile.height) && Projectile.ai[1] <= 0f;
     }
 

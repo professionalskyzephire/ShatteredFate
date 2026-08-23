@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.Audio;
@@ -74,6 +75,6 @@ namespace ShatteredFate.Content.Projectiles.Minions
 			Projectile.Size *= 2f;
 			Projectile.Damage();
 		}
-		public override bool? CanDamage() => Projectile.ai[0] == 1f ? null : false;
+		public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */ => Projectile.ai[0] == 1f ? null : false;
 	}
 }

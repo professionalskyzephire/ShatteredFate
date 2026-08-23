@@ -1,3 +1,4 @@
+using System;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
@@ -28,7 +29,7 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 			Item.shoot = ModContent.ProjectileType<AntiqueDaggerProjectile>();
 			Item.shootSpeed = 1f;
 		}
-		public override bool? UseItem(Player player) {
+		public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */ {
 			if (player.whoAmI != Main.myPlayer) return base.UseItem(player);
 			Item.useStyle = player.altFunctionUse == 2 ? ItemUseStyleID.Rapier : ItemUseStyleID.Swing;
 			Item.NetStateChanged();

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.Audio;
@@ -89,6 +90,6 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			return false;
 		}
 		public override bool ShouldUpdatePosition() => Projectile.ai[1] >= 1000000f;
-		public override bool? CanDamage() => Projectile.ai[1] > 1000000f ? null : false;
+		public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */ => Projectile.ai[1] > 1000000f ? null : false;
 	}
 }

@@ -363,7 +363,7 @@ namespace ShatteredFate.Content.Projectiles.Melee
                 Projectile.netUpdate = true;*/
             }
         }
-        public override bool? CanDamage() {
+        public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */ {
             if (CurrentAIState == AIState.Spinning && SpinningStateTimer <= 12f) {
                 return false;
             }

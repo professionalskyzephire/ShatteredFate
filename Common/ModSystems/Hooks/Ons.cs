@@ -124,8 +124,13 @@ internal class Ons {
         Y += 8;
 
         HoverBuffsPlayer hBplayer = Main.LocalPlayer.GetModPlayer<HoverBuffsPlayer>();
-        int npcCount = 0;
 
+        if (hBplayer.GetAllHoverBuffText() == null) { 
+            orig(self, buffString, ref X, ref Y, buffNameHeight);
+            return;
+        }
+
+        int npcCount = 0;
         if (!hBplayer._tic && hBplayer.Hover) { 
             SoundEngine.PlaySound(SoundID.MenuTick);
             hBplayer._tic = true;
@@ -151,9 +156,9 @@ internal class Ons {
             maxScaleX = scaleX > maxScaleX ? scaleX : maxScaleX;
         };
         if (!Tables.Buffs.SF.ToList().Contains(hBplayer.BuffType)) {
-            if (Main.debuff[hBplayer.BuffType] && hBplayer.BuffType != 146 && hBplayer.BuffType != 147) { windowColor = [new(79, 14, 14), new(84, 14, 14, 170), new(92, 15, 15), new(114, 16, 16), new(114, 16, 16), new(132, 20, 20), new(84, 14, 14)]; frame = [4, 5]; }
-            else { windowColor = [new(14, 33, 70), new(17, 41, 88, 170), new(21, 48, 101), new(26, 54, 110), new(28, 59, 119), new(33, 69, 141), new(17, 41, 88)]; frame = [2, 3];};
-        } else { windowColor = [new(0, 0, 0), new(44, 44, 44, 170), new(65, 65, 65), new(89, 89, 89), new(111, 111, 111), new(159, 159, 159), new(44, 44, 44)]; frame = [0, 1]; };
+            if (Main.debuff[hBplayer.BuffType] && hBplayer.BuffType != 146 && hBplayer.BuffType != 147) { windowColor = [new(79, 14, 14), new(84, 14, 14, 255), new(92, 15, 15), new(114, 16, 16), new(114, 16, 16), new(132, 20, 20), new(84, 14, 14)]; frame = [4, 5]; }
+            else { windowColor = [new(14, 33, 70), new(17, 41, 88, 255), new(21, 48, 101), new(26, 54, 110), new(28, 59, 119), new(33, 69, 141), new(17, 41, 88)]; frame = [2, 3];};
+        } else { windowColor = [new(0, 0, 0), new(44, 44, 44, 255), new(65, 65, 65), new(89, 89, 89), new(111, 111, 111), new(159, 159, 159), new(44, 44, 44)]; frame = [0, 1]; };
 
         Rectangle window = new(X - 10, Y - 6, maxScaleX + 20, maxScaleY + 6);
         if (window.Right > Main.screenWidth) { X -= window.Right - Main.screenWidth + 16; };

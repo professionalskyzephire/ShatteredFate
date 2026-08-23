@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,6 +34,6 @@ namespace ShatteredFate.Content.Projectiles.Magic
 			if(Projectile.alpha > 0) Projectile.alpha -= 17;
 			Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
 		}
-		public override bool? CanDamage() => Projectile.alpha == 0 ? null : false;
+		public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */ => Projectile.alpha == 0 ? null : false;
 	}
 }

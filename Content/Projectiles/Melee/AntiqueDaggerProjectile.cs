@@ -102,7 +102,7 @@ namespace ShatteredFate.Content.Projectiles.Melee
 			Main.EntitySpriteDraw(texture, Projectile.Center + (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * (flying ? 15f : 50f) * Projectile.scale - Main.screenPosition, null, Color.Gold with {A = 0} * attackTimer * (flying ? 0.7f : 0.4f), MathHelper.PiOver2 * progress * Projectile.spriteDirection + MathHelper.PiOver4, texture.Size() * 0.5f, Projectile.scale * new Vector2(0.2f, 1f), SpriteEffects.None, 0);
 			return false;
 		}
-		public override bool? CanDamage() => Projectile.ai[2] > 0f ? false : null;
+		public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */ => Projectile.ai[2] > 0f ? false : null;
 		public override bool ShouldUpdatePosition() => Projectile.ai[0] > 0f && Projectile.ai[2] == 0f && !Collision.SolidCollision(Projectile.position - Projectile.velocity, Projectile.width, Projectile.height);
 	}
 }

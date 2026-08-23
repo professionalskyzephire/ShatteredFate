@@ -330,7 +330,7 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 			Utils.PlotTileLine(start, end, 15 * Projectile.scale, DelegateMethods.CutTiles);
 		}
 
-		public override bool? CanDamage()
+		public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */
 		{
 			if (CurrentStage == AttackStage.Prepare || CurrentStage == AttackStage.Ready || stop || charge < 0.1f)
 				return false;

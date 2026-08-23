@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -109,7 +110,7 @@ namespace ShatteredFate.Content.Projectiles.Ranged
             if (Projectile.ai[1] == 2f) for (int i = 0; i < 4; i++) Main.EntitySpriteDraw(texture, Projectile.Center + Vector2.UnitY.RotatedBy(i * MathHelper.PiOver2 + Main.GlobalTimeWrappedHourly) * 3f + new Vector2(MathHelper.Lerp(20f, 12f, (Projectile.frame + 1) / 3f) * Projectile.spriteDirection, -4 * Main.player[Projectile.owner].gravDir).RotatedBy(Projectile.rotation) * Projectile.scale - Main.screenPosition, null, Color.Gold with { A = 0 } * 0.2f, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, spriteEffects, 0);
             return false;
         }
-        public override bool? CanDamage() => false;
+        public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */ => false;
         public override bool ShouldUpdatePosition() => false;
     }
 }
