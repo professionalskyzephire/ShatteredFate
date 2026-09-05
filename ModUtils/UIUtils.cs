@@ -45,11 +45,21 @@ public static class UIUtils {
         return rect.Contains(Main.mouseX, Main.mouseY);
     }
     public static bool HoverText(Vector2 pos, string text, float scale = 0.9f) => new Vector2(Main.mouseX, Main.mouseY).Between(pos, pos + ChatManager.GetStringSize(FontAssets.MouseText.Value, text, new Vector2(scale)) * new Vector2(scale) * new Vector2(1f).X);
-    public static void DrawText(SpriteBatch sB, string text, Vector2 pos, DynamicSpriteFont font = null, Color? color = null, Vector2? orgin = null, Vector2? scale = null) {
+    public static void DrawText(SpriteBatch sB, string text, Vector2 pos, DynamicSpriteFont font = null, Color? color = null, Color? color1 = null, Vector2? orgin = null, Vector2? scale = null) {
         font ??= FontAssets.MouseText.Value;
         color ??= Color.White;
         orgin ??= Vector2.Zero;
         scale ??= Vector2.One;
-        ChatManager.DrawColorCodedStringWithShadow(sB, font, text, pos, (Color)color, 0f, (Vector2)orgin, (Vector2)scale);
+        if (color1 != null) { ChatManager.DrawColorCodedStringWithShadow(sB, font, text, pos, (Color)color, (Color)color1, 0f, (Vector2)orgin, (Vector2)scale); }
+        else { ChatManager.DrawColorCodedStringWithShadow(sB, font, text, pos, (Color)color, 0f, (Vector2)orgin, (Vector2)scale); }
     }
+    public static void DrawTexture<T>(SpriteBatch sB, Texture2D texture, T VectorOrRect, Rectangle? sourceRectangle = null, Color? color = null, float rotation = 0f, Vector2? origin = null, float scale = 1f, SpriteEffects effects = SpriteEffects.None, float layerDepth = 0) { 
+        color ??= Color.White;
+        if (origin == null) { origin = sourceRectangle == null ? texture.Size() / 2f : sourceRectangle.Value.Size() / 2f; }
+        if (VectorOrRect is Vector2 pos) { sB.Draw(texture, pos, sourceRectangle, color.Value, rotation, origin.Value, scale, effects, layerDepth); }
+        else if (VectorOrRect is Rectangle rec) { sB.Draw(texture, rec, sourceRectangle, color.Value, rotation, origin.Value, effects, layerDepth); }
+        else { throw new System.Exception("Params <T> is not Vector or Rectangle"); };
+    }
+    public static Vector2 X(this Vector2 pos, float value) => new(pos.X + value, pos.Y);
+    public static Vector2 Y(this Vector2 pos, float value) => new(pos.X, pos.Y + value);
 };

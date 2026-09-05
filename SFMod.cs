@@ -8,15 +8,10 @@ public class SFMod : Mod {
 
     public UserInterface SFUI { get; private set; }
 
-    public const string VanillaTexture = "Terraria/Images/";
-    public const string ExtrasPath = "ShatteredFate/Extras/";
-    public const string BlankTexture = "ShatteredFate/Extras/Invisible";
-    public const string MagicPixel = "ShatteredFate/Extras/MagicPixel";
+    public static string ModName => Instance is null ? "SFMod" : Instance.DisplayName;
 
     static Mod _instance;
     static Mod _musicMod;
-
-    public static string ModName => Instance is null ? "SFMod" : Instance.DisplayName;
 
     public static Mod Instance => _instance;
     internal static Mod MusicMod {
@@ -30,7 +25,6 @@ public class SFMod : Mod {
         Loader.Load(this);
         SFUI = new UserInterface();
     }
-
     public override void Unload() {
         _musicMod = null;
         Loader.Unload();

@@ -1,4 +1,4 @@
-﻿using ShatteredFate.Common.ModSystems.Worlds;
+﻿using ShatteredFate.Core;
 using ShatteredFate.ModUtils;
 using ShatteredFate.UIElements;
 using Terraria;
@@ -11,7 +11,7 @@ namespace ShatteredFate.Content.NPCs.Misc;
 
 [AutoloadHead]
 public class ShadyFigure : ModNPC {
-    ShadyFigureUI chat;
+    CustomDialogBox chat;
 
     public override void SetStaticDefaults() {
         Main.npcFrameCount[Type] = 25;
@@ -32,40 +32,20 @@ public class ShadyFigure : ModNPC {
     public override bool CanBeHitByNPC(NPC attacker) => false;
     public override void AI() {
         if (Main.dayTime) { NPC.active = false; }
-        Player player = Main.LocalPlayer;
-        if (player.talkNPC == -1 || Main.npc[player.talkNPC].type != Type) {
-            chat = null;
+        if (chat == null) {
+            chat = new(new ShadyFigureUI(), new(null, $"{SFMod.ModName}: Shady Figure Shop"), Type);
+            chat.Register();
         }
     }
     public override string GetChat() => Loc.GetNPCChat("ShadyFigure.Says." + Main.rand.Next(0, 5));
-    public override void SetChatButtons(ref string button, ref string button2) {
-        button = Loc.GetNPCChat("ShadyFigure.Button.0");
-    }
+    public override void SetChatButtons(ref string button, ref string button2) => button = Loc.GetNPCChat("ShadyFigure.Button.0");
     public override void OnChatButtonClicked(bool firstButton, ref string shopName) {
         if (firstButton) {
             Main.playerInventory = true;
             Main.stackSplit = 9999;
             Main.npcChatText = "";
-
-            Player player = Main.LocalPlayer;
-            TryGetTalkNPC(player, out NPC npc);
-            if (chat == null) {
-                chat = new ShadyFigureUI();
-                ModContent.GetInstance<SFMod>().SFUI.SetState(chat);
-            }
-
+            chat.StartUI();
             SoundEngine.PlaySound(SoundID.MenuOpen);
-        }
-    }
-    public static bool TryGetTalkNPC(Player player, out NPC npc) {
-        npc = null;
-
-        int index = player.talkNPC;
-        if (index < 0 || index >= Main.npc.Length) {
-            return false;
-        }
-
-        npc = Main.npc[index];
-        return npc.active;
+        };
     }
 }

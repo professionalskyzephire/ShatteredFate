@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ShatteredFate.Core;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -15,8 +16,8 @@ public class UISetting : ModSystem {
 
         int invIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
-        if (invIndex != -1) {
-            layers.Insert(invIndex, new LegacyGameInterfaceLayer($"{SFMod.ModName}: Shady Figure UI", () => { Mods.SFUI.Draw(sb, new()); return true; }, InterfaceScaleType.UI));
+        foreach (CustomDialogBox dialogBox in Manager.RegisterUI) {
+            dialogBox.RegisterLayer(layers, Mods.SFUI);
         }
     }
     public override void UpdateUI(GameTime gameTime) {

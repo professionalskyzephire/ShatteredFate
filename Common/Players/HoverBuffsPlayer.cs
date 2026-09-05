@@ -1,5 +1,4 @@
 ﻿using ShatteredFate.ModUtils;
-using System.Linq;
 using Terraria.ModLoader;
 
 namespace ShatteredFate.Common.Players;

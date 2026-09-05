@@ -1,0 +1,6 @@
+Ability: {
+	Magnetism: {
+		CD: Hypermagnetism is on cooldown for {0} more seconds.
+		Unlock: Hypermagnetism ability unlocked! Press {0} to activate Hypermagnetism for 15 seconds. (1 minute cooldown)
+	}
+}

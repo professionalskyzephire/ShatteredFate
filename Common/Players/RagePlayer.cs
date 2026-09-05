@@ -35,13 +35,20 @@ public class RagePlayer : ModPlayer {
     }
     public int GetMaxRage() {
         int value = 0;
-        for (int i = 0; i < 3; i++) { if (Player.armor[i].type != ItemID.None) { value += cheakRage(i); } };
-        for (int i = 0; i < AccessorySlotLoader.MaxVanillaSlotCount; i++) { if (Player.armor[i].type != ItemID.None) { value += cheakRage(i); } };
-        for (int i = 0; i < Player.GetModPlayer<ModAccessorySlotPlayer>().SlotCount; i++) { if (PlayersExpansions.GetModedAccItemInSlot(Player)[i].type != ItemID.None) { value += cheakRage(i); } };
+        for (int i = 0; i < 3; i++) { if (Player.armor[i].type != ItemID.None) { value += cheakRage(i); }; };
+        for (int i = 3; i < AccessorySlotLoader.MaxVanillaSlotCount; i++) { if (Player.armor[i].type != ItemID.None) { value += cheakRage(i); }; };
+        for (int i = 0; i < Player.GetModPlayer<ModAccessorySlotPlayer>().SlotCount; i++) { if (PlayersExpansions.GetModedAccItemInSlot(Player)[i].type != ItemID.None) { value += cheakRage(i, true); }; };
         SetMaxRage(value);
-        int cheakRage(int index) {
-            if (Player.armor[index].GetGlobalItem<RageItem>().GetMaxRage() == 0) { return 0; }
-            else { equipAcc.TryAdd(Player.armor[index].type, true); return Player.armor[index].GetGlobalItem<RageItem>().GetMaxRage(); };
+        int cheakRage(int index, bool modded = false) {
+            if (modded) {
+                Item[] it = PlayersExpansions.GetModedAccItemInSlot(Player);
+                if (it[index].GetGlobalItem<RageItem>().GetMaxRage() == 0) { return 0; }
+                else { equipAcc.TryAdd(it[index].type, true); return it[index].GetGlobalItem<RageItem>().GetMaxRage(); };
+            }
+            else {
+                if (Player.armor[index].GetGlobalItem<RageItem>().GetMaxRage() == 0) { return 0; }
+                else { equipAcc.TryAdd(Player.armor[index].type, true); return Player.armor[index].GetGlobalItem<RageItem>().GetMaxRage(); };
+            }
         }
         return _maxRage;
     }

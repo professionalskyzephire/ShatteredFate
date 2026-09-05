@@ -8,7 +8,7 @@ namespace ShatteredFate.Content.Projectiles.Misc;
 public class Explosion : ModProjectile
 {
     // Empty texture
-    public override string Texture => SFMod.VanillaTexture + "Projectile_" + ProjectileID.LostSoulFriendly;
+    public override string Texture => Resources.FolderNames.VanillaTexture + "Projectile_" + ProjectileID.LostSoulFriendly;
 
     public override void SetDefaults()
     {

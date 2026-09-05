@@ -60,7 +60,6 @@ public class ShadyFigureShop : ModSystem {
         FilledStatus = reader.ReadBoolean();
     }
     public override void PostUpdateWorld() {
-        //Main.NewText(SFWorld.WorldProgress);
         if (Main.dayTime && FilledStatus) { FilledStatus = false; }
         if (FilledStatus) { return; };
         if (!FilledStatus && !Main.dayTime) { FillShop(); }
@@ -74,7 +73,6 @@ public class ShadyFigureShop : ModSystem {
             if (used.Contains(item.Target)) { continue; }
             available.Add(item);
         }
-
         if (available.Count == 0) {
             target = 0;
             return false;
@@ -157,19 +155,6 @@ public class ShadyFigureShop : ModSystem {
         return check;
     }
 
-    TagCompound ToTag(ShopItem item) {
-        if (item == null) {
-            return new TagCompound {
-                ["Target"] = 0,
-                ["Need"] = 0
-            };
-        }
-        else {
-            return new TagCompound {
-                ["Target"] = item.Target,
-                ["Need"] = item.Need
-            };
-        }
-    }
+    TagCompound ToTag(ShopItem item) => new() { ["Target"] = item == null ? 0 : item.Target, ["Need"] = item == null ? 0 : item.Need };
     ShopItem FromTag(TagCompound tag) => new(tag.GetInt("Target"), tag.GetInt("Need"));
 };

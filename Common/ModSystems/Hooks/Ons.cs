@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ShatteredFate.Common.Players;
 using ShatteredFate.Content.Items.Accessories;
+using ShatteredFate.Core;
 using ShatteredFate.ModUtils;
 using System;
 using System.Linq;
@@ -16,7 +17,7 @@ using Terraria.ModLoader;
 namespace ShatteredFate.Common.ModSystems.Hooks;
 
 internal class Ons {
-    public static void Load(Mod mod) {
+    internal static void Load(Mod mod) {
         On_Item.AffixName += NewItemName; // change name of fallen stars
         On_Item.DespawnIfMeetingConditions += TransformationStar; // prevent fallen stars from despawning
         On_WorldGen.UpdateWorld += NewStars; // used for overriding vanilla fallen star spawning
@@ -24,6 +25,7 @@ internal class Ons {
         On_Player.AddBuff += FixRageBuff; // Remove "vanilla" rage buff if active "new" rage buff
         On_Main.DrawBuffIcon += TicSound; // Tic song if hover buffs
         On_Main.MouseText_DrawBuffTooltip += DrawBgForBuffs; // Add BG for new buffs
+        On_Main.GUIChatDrawInner += DrawBox; // Draw custom dialog box
     }
 
     static string NewItemName(On_Item.orig_AffixName orig, Item self) {
@@ -188,8 +190,17 @@ internal class Ons {
 
         orig(self, buffString, ref X, ref Y, buffNameHeight);
     }
+    static void DrawBox(On_Main.orig_GUIChatDrawInner orig, Main self) {
+        foreach (CustomDialogBox dialogBox in Manager.RegisterUI) { 
+            if (Main.npc[Main.LocalPlayer.talkNPC].type == dialogBox.NPC) { 
+                dialogBox.StartUI();
+                return; 
+            }; 
+        };
+        orig(self);
+    }
 
-    public static void Unload() {
+    internal static void Unload() {
         On_Item.AffixName -= NewItemName;
         On_Item.DespawnIfMeetingConditions -= TransformationStar;
         On_WorldGen.UpdateWorld -= NewStars;
@@ -197,5 +208,6 @@ internal class Ons {
         On_Player.AddBuff -= FixRageBuff;
         On_Main.DrawBuffIcon -= TicSound;
         On_Main.MouseText_DrawBuffTooltip -= DrawBgForBuffs;
+        On_Main.GUIChatDrawInner -= DrawBox;
     }
 };

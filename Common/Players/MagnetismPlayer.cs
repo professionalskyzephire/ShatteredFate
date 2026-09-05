@@ -34,7 +34,7 @@ public class MagnetismPlayer : ModPlayer {
     public override void ResetEffects() => SetGrabRange(0);
     public override void ProcessTriggers(Terraria.GameInput.TriggersSet triggersSet) {
         if (GetCooldown() > 0) {
-            if (KeyBind.GetMagnetismKey().JustPressed) { Main.NewText("Hypermagnetism is on cooldown for " + (GetCooldown() / 60 + 1) + " more seconds.", Color.Orange); };
+            if (KeyBind.GetMagnetismKey().JustPressed) { Main.NewText(string.Format(ModUtils.Loc.GetChat("Ability.Magnetism.CD"), GetCooldown() / 60 + 1), Color.Orange); };
         };
         if (KeyBind.GetMagnetismKey().JustPressed && GetAbilityStatus() && GetCooldown() == 0) {
             Player.AddBuff(ModContent.BuffType<HypermagnetismBuff>(), 60 * 15);
@@ -42,7 +42,7 @@ public class MagnetismPlayer : ModPlayer {
         };
     }
     public override void PostUpdate() {
-        if (!GetAbilityStatus() && GetStacks() > 0 && !Player.HasBuff<MagnetismBuff>()) { SetStacks(0); }
-        if (GetCooldown() > 0) { SetCooldown(GetCooldown() - 1); }
+        if (!GetAbilityStatus() && GetStacks() > 0 && !Player.HasBuff<MagnetismBuff>()) { SetStacks(0); };
+        if (GetCooldown() > 0) { SetCooldown(GetCooldown() - 1); };
     }
 }

@@ -289,8 +289,8 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 			}
 
 			Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
-			Texture2D texture1 = ModContent.Request<Texture2D>(SFMod.ExtrasPath + "OldFrypan_Extra1").Value;
-			Texture2D texture2 = ModContent.Request<Texture2D>(SFMod.ExtrasPath + "OldFrypan_Extra2").Value;
+			Texture2D texture1 = ModContent.Request<Texture2D>(Resources.FolderNames.ExtrasPath + "OldFrypan_Extra1").Value;
+			Texture2D texture2 = ModContent.Request<Texture2D>(Resources.FolderNames.ExtrasPath + "OldFrypan_Extra2").Value;
 
 			if (CurrentStage == AttackStage.Execute && ready && !stop)
 			{
@@ -362,7 +362,7 @@ namespace ShatteredFate.Content.Items.Weapons.Melee
 
 	public class OldFrypanStomp : ModProjectile
 	{
-		public override string Texture => SFMod.BlankTexture;
+		public override string Texture => Resources.FolderNames.BlankTexture;
 
 		public override void SetDefaults()
 		{
